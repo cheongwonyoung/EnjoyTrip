@@ -1,28 +1,15 @@
 <template>
   <div>
-    <div>
-      <router-link :to="{ name: 'home' }">Home</router-link> / 여행지 일정 공유
-    </div>
+    <div><router-link :to="{ name: 'home' }">Home</router-link> / 여행지 일정 공유</div>
     <div><h2>여행지 일정 공유</h2></div>
 
     <b-form v-if="show">
       <b-form-group id="input-group-1" label="제목" label-for="input-1">
-        <b-form-input
-          id="input-1"
-          v-model="form.title"
-          type="name"
-          placeholder="제목 입력"
-          required
-        ></b-form-input>
+        <b-form-input id="input-1" v-model="form.title" type="name" placeholder="제목 입력" required></b-form-input>
       </b-form-group>
 
       <b-form-group id="input-group-2" label="검색" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="word"
-          placeholder="검색어 입력"
-          required
-        ></b-form-input>
+        <b-form-input id="input-2" v-model="word" placeholder="검색어 입력" required></b-form-input>
         <b-button variant="primary" @click="recommend">검색</b-button>
       </b-form-group>
 
@@ -66,25 +53,11 @@
 
     <carousel :perPage="5" :navigationEnabled="true" :paginationEnabled="false">
       <slide v-for="(reco, index) in recoList" :key="index">
-        <b-card
-          :title="reco.title"
-          :img-src="reco.firstImage"
-          img-alt="Image"
-          img-top
-          tag="article"
-          style="max-width: 20rem"
-          class="mb-2"
-        >
+        <b-card :title="reco.title" :img-src="reco.firstImage" img-alt="Image" img-top tag="article" style="max-width: 20rem" class="mb-2">
           <b-card-text>
             {{ reco.addr1 }}
           </b-card-text>
-          <b-button
-            variant="info"
-            class="btn-circle-sm"
-            @click="addPlanList(reco)"
-          >
-            +
-          </b-button>
+          <b-button variant="info" class="btn-circle-sm" @click="addPlanList(reco)"> + </b-button>
         </b-card>
       </slide>
     </carousel>
@@ -93,21 +66,12 @@
       <b-row class="my-1" v-for="(select, idx) in selected" :key="idx">
         <b-col sm="3">
           <div>
-            <b-img
-              v-bind:src="select.image"
-              class="img-under"
-              fluid
-              alt="Responsive image"
-            ></b-img>
+            <b-img v-bind:src="select.image" class="img-under" fluid alt="Responsive image"></b-img>
           </div>
         </b-col>
         <b-col sm="9">
           <label for="input-none">{{ select.title }}</label>
-          <b-form-input
-            id="input-none"
-            :state="null"
-            placeholder="글 작성"
-          ></b-form-input>
+          <b-form-input v-model="select.text" id="input-none" :state="null" placeholder="글 작성"></b-form-input>
         </b-col>
       </b-row>
     </b-container>
@@ -133,8 +97,7 @@ export default {
         title: "",
         attIdList: [],
         attDescList: [],
-        thumbnail:
-          "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg",
+        thumbnail: "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg",
       },
       word: "",
 
@@ -153,6 +116,7 @@ export default {
         index: reco.contentId,
         title: reco.title,
         image: reco.firstImage,
+        text: "",
       });
     },
     async recommend() {
@@ -189,7 +153,7 @@ export default {
         console.log("select check");
         console.log(element.image);
         this.form.attIdList.push(element.index);
-        this.form.attDescList.push(element.title);
+        this.form.attDescList.push(element.text);
         // this.form.attDescList =[]
         // this.form.attDescList =[0]
         // this.form.attDescList =[0,2]

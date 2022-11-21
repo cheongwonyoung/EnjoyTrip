@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.user.model.dao.UserDao">
+
+	<resultMap type="UserDto" id="user">
+		<result column="user_email" property="userId"/>
+		<result column="user_name" property="userName"/>
+		<result column="user_password" property="userPwd"/>
+	</resultMap>
+	
+	<resultMap type="UserDto" id="memberAll" extends="user">
+		<result column="join_date" property="joinDate"/>
+	</resultMap>
+	
+	<insert id="regist" parameterType="userDto">
+		insert into members
+		(user_email, user_password, user_name, join_date)
+		values (#{userId}, #{userPwd}, #{userName}, now())
+	</insert>
+	
+ 	<select id="login" parameterType="map" resultMap="user">
+		select user_email, user_name, user_password
+		from members
+		where user_email = #{userid} and
+		user_password = #{userpwd}
+	</select>
+	
+	<select id="idCheck" parameterType="String" resultType="int">
+		select count(user_email)
+		from members
+		where user_email = #{userId}
+	</select>
+	
+	<update id="editProfile" parameterType="userDto">
+		update members
+		<trim prefix="set" suffixOverrides=",">
+			<if test="userPwd != null">user_password = #{userPwd},</if>
+			<if test="userName != null">user_name = #{userName},</if>
+		</trim>
+		where user_email = #{userId}
+	</update>
+	
+	<delete id="delete" parameterType="String">
+		delete from members
+		where user_email = #{id}
+	</delete>
+	
+	<select id="getMember" parameterType="string" resultMap="memberAll">
+		select user_email, user_password, user_name, join_date
+		from members
+		where user_email = #{userId}
+	</select>
+	
+	<select id="find" parameterType="Map" resultType="String">
+		select user_password
+		from members
+		where user_email = #{userId}
+		and user_name = #{userName}
+	</select>
+	
+	<select id="getRefreshToken" parameterType="string" resultType="string">
+		select token
+		from members
+		where user_email = #{userid}
+	</select>
+	
+	<update id="saveRefreshToken" parameterType="map">
+		update members
+		set token = #{token}
+		where user_email = #{userid}
+	</update>
+	
+	<update id="deleteRefreshToken" parameterType="map">
+		update members
+		set token = #{token, jdbcType=VARCHAR}
+		where user_email = #{userid}
+	</update>
+	
+	<select id="userInfo" parameterType="string" resultMap="memberAll">
+		select user_email, user_name, user_password, join_date
+		from members
+		where user_email = #{userid}
+	</select>
+</mapper>

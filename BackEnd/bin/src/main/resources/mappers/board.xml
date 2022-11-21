@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.board.model.dao.BoardDao">
+
+	<resultMap type="boardDto" id="planBoard">
+		<result column="plan_id" property="planId"/>
+		<result column="title" property="title"/>
+		<result column="hit" property="hit"/>
+		<result column="register_date" property="registerDate"/>
+		<result column="thumbnail" property="thumbNail"/>
+		<result column="user_email" property="userId"/>
+	</resultMap>
+	
+	<resultMap type="boardDto" id="viewPlan" extends="planBoard">
+		<collection property="contentList" column="plan_id" javaType="list" ofType="boardContentDto" select="getContent"/>
+	</resultMap>
+	
+	<!-- <resultMap type="boardContentDto" id="contents">
+		<result property="contentId"/>
+		<result property="contentTitle"/>
+		<result property="contentImg"/>
+	</resultMap> -->
+	
+	<select id="getContent" parameterType="map" resultType="boardContentDto">
+		select c.content_id as contentId, c.title as contentTitle, c.firstimage as contentImg, pc.content_desc as contentDesc
+		from content as c join plan_content as pc
+ 		on c.content_id = pc.content_id
+		where pc.plan_id = #{planId}
+		and pc.content_id = #{contentId}
+	</select>
+	
+	<select id="getContentIds" parameterType="int" resultType="int">
+		select content_id
+		from plan_content
+		where plan_id = #{planId}
+	</select>
+	
+	<select id="getList" resultMap="planBoard">
+		select *
+		from plan_board
+		order by plan_id desc
+	</select>
+	
+	<select id="view" parameterType="int" resultMap="viewPlan">
+		select *
+		from plan_board
+		where plan_id = #{planId}
+	</select>
+	
+	<insert id="write" parameterType="boardDto">
+		insert into plan_board(title, hit, register_date, thumbnail, user_email)
+		values (#{title}, 0, now(), #{thumbNail}, #{userId})
+		<selectKey resultType="int" keyProperty="planId" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+	</insert>
+	
+	<insert id="write2" parameterType="boardDto">
+		insert into plan_content(plan_id, content_id, content_desc)
+		values 
+		<foreach collection="contentList" item="contentinfo" separator=" , ">
+			(#{planId}, #{contentinfo.contentId}, #{contentinfo.contentDesc})
+		</foreach>
+	</insert>
+
+	<update id="updateHit" parameterType="int">
+		update plan_board
+		set hit = hit + 1
+		where plan_id = #{planId}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from plan_board
+		where plan_id = #{planId}
+	</delete>
+</mapper>

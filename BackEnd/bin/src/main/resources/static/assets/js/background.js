@@ -1,0 +1,284 @@
+/**
+* Template Name: Moderna - v4.9.1
+* Template URL: https://bootstrapmade.com/free-bootstrap-template-corporate-moderna/
+* Author: BootstrapMade.com
+* License: https://bootstrapmade.com/license/
+*/
+
+/**
+//let login_signal = localStorage.getItem("login");
+//let state_logout = document.querySelectorAll(".login");
+//let state_login = document.querySelectorAll(".logout");
+//if(login_signal){
+//  // 로그인 되어있다면
+//  state_logout.forEach(function(st_logout){
+//    st_logout.style.display = "none";
+//  });
+//  state_login.forEach(function(st_login){
+//    st_login.style.display = "";
+//  });
+//}else{
+//  state_logout.forEach(function(st_logout){
+//    st_logout.style.display = "";
+//  });
+//  state_login.forEach(function(st_login){
+//    st_login.style.display = "none";
+//  });
+//}
+//
+//document.querySelector("#btn-logout").addEventListener("click", function(){
+//  localStorage.clear();
+//  window.location.reload();
+//});
+*/
+
+(function() {
+  "use strict";
+
+  /**
+   * Easy selector helper function
+   */
+  const select = (el, all = false) => {
+    el = el.trim()
+    if (all) {
+      return [...document.querySelectorAll(el)]
+    } else {
+      return document.querySelector(el)
+    }
+  }
+
+  /**
+   * Easy event listener function
+   */
+  const on = (type, el, listener, all = false) => {
+    let selectEl = select(el, all)
+    if (selectEl) {
+      if (all) {
+        selectEl.forEach(e => e.addEventListener(type, listener))
+      } else {
+        selectEl.addEventListener(type, listener)
+      }
+    }
+  }
+
+  /**
+   * Easy on scroll event listener 
+   */
+  const onscroll = (el, listener) => {
+    el.addEventListener('scroll', listener)
+  }
+
+  /**
+   * Scrolls to an element with header offset
+   */
+  const scrollto = (el) => {
+    let header = select('#header')
+    let offset = header.offsetHeight
+
+    if (!header.classList.contains('header-scrolled')) {
+      offset -= 20
+    }
+
+    let elementPos = select(el).offsetTop
+    window.scrollTo({
+      top: elementPos - offset,
+      behavior: 'smooth'
+    })
+  }
+
+  /**
+   * Toggle .header-scrolled class to #header when page is scrolled
+   */
+  let selectHeader = select('#header')
+  if (selectHeader) {
+    const headerScrolled = () => {
+      if (window.scrollY > 100) {
+        selectHeader.classList.add('header-scrolled')
+      } else {
+        selectHeader.classList.remove('header-scrolled')
+      }
+    }
+    window.addEventListener('load', headerScrolled)
+    onscroll(document, headerScrolled)
+  }
+
+  /**
+   * Back to top button
+   */
+  let backtotop = select('.back-to-top')
+  if (backtotop) {
+    const toggleBacktotop = () => {
+      if (window.scrollY > 100) {
+        backtotop.classList.add('active')
+      } else {
+        backtotop.classList.remove('active')
+      }
+    }
+    window.addEventListener('load', toggleBacktotop)
+    onscroll(document, toggleBacktotop)
+  }
+
+  /**
+   * Mobile nav toggle
+   */
+  on('click', '.mobile-nav-toggle', function(e) {
+    select('#navbar').classList.toggle('navbar-mobile')
+    this.classList.toggle('bi-list')
+    this.classList.toggle('bi-x')
+  })
+
+  /**
+   * Mobile nav dropdowns activate
+   */
+  on('click', '.navbar .dropdown > a', function(e) {
+    if (select('#navbar').classList.contains('navbar-mobile')) {
+      e.preventDefault()
+      this.nextElementSibling.classList.toggle('dropdown-active')
+    }
+  }, true)
+
+  /**
+   * Scrool with ofset on links with a class name .scrollto
+   */
+  on('click', '.scrollto', function(e) {
+    if (select(this.hash)) {
+      e.preventDefault()
+
+      let navbar = select('#navbar')
+      if (navbar.classList.contains('navbar-mobile')) {
+        navbar.classList.remove('navbar-mobile')
+        let navbarToggle = select('.mobile-nav-toggle')
+        navbarToggle.classList.toggle('bi-list')
+        navbarToggle.classList.toggle('bi-x')
+      }
+      scrollto(this.hash)
+    }
+  }, true)
+
+  /**
+   * Skills animation
+   */
+  let skilsContent = select('.skills-content');
+  if (skilsContent) {
+    new Waypoint({
+      element: skilsContent,
+      offset: '80%',
+      handler: function(direction) {
+        let progress = select('.progress .progress-bar', true);
+        progress.forEach((el) => {
+          el.style.width = el.getAttribute('aria-valuenow') + '%'
+        });
+      }
+    })
+  }
+
+  /**
+   * Testimonials slider
+   */
+  new Swiper('.testimonials-carousel', {
+    speed: 400,
+    loop: true,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      type: 'bullets',
+      clickable: true
+    }
+  });
+
+  /**
+   * Porfolio isotope and filter
+   */
+  window.addEventListener('load', () => {
+    let portfolioContainer = select('.portfolio-container');
+    if (portfolioContainer) {
+      let portfolioIsotope = new Isotope(portfolioContainer, {
+        itemSelector: '.portfolio-wrap',
+        layoutMode: 'fitRows'
+      });
+
+      let portfolioFilters = select('#portfolio-flters li', true);
+
+      on('click', '#portfolio-flters li', function(e) {
+        e.preventDefault();
+        portfolioFilters.forEach(function(el) {
+          el.classList.remove('filter-active');
+        });
+        this.classList.add('filter-active');
+
+        portfolioIsotope.arrange({
+          filter: this.getAttribute('data-filter')
+        });
+        portfolioIsotope.on('arrangeComplete', function() {
+          AOS.refresh()
+        });
+      }, true);
+    }
+
+  });
+
+  /**
+   * Initiate portfolio lightbox 
+   */
+  const portfolioLightbox = GLightbox({
+    selector: '.portfolio-lightbox'
+  });
+
+  /**
+   * Portfolio details slider
+   */
+  new Swiper('.portfolio-details-slider', {
+    speed: 400,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      type: 'bullets',
+      clickable: true
+    }
+  });
+
+  /**
+   * Animation on scroll
+   */
+  window.addEventListener('load', () => {
+    AOS.init({
+      duration: 1000,
+      easing: "ease-in-out",
+      once: true,
+      mirror: false
+    });
+  });
+
+  /**
+   * Initiate Pure Counter 
+   */
+  new PureCounter();
+
+})()
+
+
+/*
+ * Start Bootstrap - Stylish Portfolio v6.0.5 (https://startbootstrap.com/theme/stylish-portfolio)
+ * Copyright 2013-2022 Start Bootstrap
+ * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-stylish-portfolio/blob/master/LICENSE)
+ */
+
+window.addEventListener("DOMContentLoaded", (event) => {
+  
+  	let tem = 2;//특정 갯수만큼 반복하고 멈추게 하기 위해서
+	function change() {
+		const roop = setTimeout(change, 2000);//1초에 한번씩 실행
+		document.querySelector(".masthead").style.backgroundImage = `url('./assets/img/background/back_${tem++}.jpg')`;
+		document.querySelector(".masthead").style.backgroundSize = 'cover';
+		document.querySelector(".masthead").style.backgroundRepeat = 'no-repeat';
+			    if (tem === 20) tem = 1;
+	};
+
+	change();//clearTimeout 조건이 될떄까지 반복
+});

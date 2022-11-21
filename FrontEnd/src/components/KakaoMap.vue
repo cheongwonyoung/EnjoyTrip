@@ -31,8 +31,7 @@ export default {
       const script = document.createElement("script");
       /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
-      script.src =
-        "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=915cffed372954b7b44804ed422b9cf0";
+      script.src = "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=915cffed372954b7b44804ed422b9cf0";
       document.head.appendChild(script);
     }
   },
@@ -110,11 +109,7 @@ export default {
       var imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 
       // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-      var markerImage = new kakao.maps.MarkerImage(
-        imageSrc,
-        imageSize,
-        imageOption
-      );
+      var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 
       var locPosition = new kakao.maps.LatLng(this.lat, this.lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
         message = '<div style="padding:5px;">현재위치</div>'; // 인포윈도우에 표시될 내용입니다
@@ -137,20 +132,14 @@ export default {
           this.markers[i].setMap(null);
         }
         // 지도 이동
-        var moveLatLon = new kakao.maps.LatLng(
-          recoList[0].lattitude,
-          recoList[0].longitude
-        );
+        var moveLatLon = new kakao.maps.LatLng(recoList[0].lattitude, recoList[0].longitude);
         this.map.panTo(moveLatLon); // 부드럽게 이동(현지도 안에면)
 
         console.log("test");
         console.log(recoList);
         recoList.forEach((place) => {
           // console.log(Object.keys(place));
-          let markerPosition = new kakao.maps.LatLng(
-            place.lattitude,
-            place.longitude
-          );
+          let markerPosition = new kakao.maps.LatLng(place.lattitude, place.longitude);
 
           // var iwContent;
 
@@ -166,7 +155,7 @@ export default {
             '    <div class="info">' +
             '        <div class="title">' +
             `            ${place.title}` +
-            '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
+            '            <div class="close map-close" onclick="closeOverlay()" title="닫기"></div>' +
             "        </div>" +
             '        <div class="body">' +
             '            <div class="img">' +
