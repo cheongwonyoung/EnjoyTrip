@@ -157,10 +157,10 @@ export default {
         }
       }
 
-      http
-        .put("/user/edit", JSON.stringify(this.userDto))
-        .then(({ data }) => console.log(data));
-      this.$router.push({ name: "infoprofile" });
+      http.put("/user/edit", JSON.stringify(this.userDto)).then(({ data }) => {
+        console.log(data);
+        this.$router.push({ name: "infoprofile" });
+      });
     },
   },
 };
