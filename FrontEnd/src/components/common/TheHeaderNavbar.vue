@@ -6,28 +6,8 @@
           <b-navbar-brand href="/"><h3>Enjoy Trip</h3></b-navbar-brand>
           <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         </b-col>
-        <b-col cols="6">
-          <b-collapse id="nav-collapse" is-nav class="float-left">
-            <!-- <b-navbar-nav>
-          <b-nav-item href="#">Link</b-nav-item>
-          <b-nav-item href="#" disabled>Disabled</b-nav-item>
-        </b-navbar-nav> -->
-            <b-navbar-nav>
-              <b-nav-item href="#">
-                <router-link :to="{ name: 'boardlist' }">일정 공유</router-link>
 
-                <router-link :to="{ name: 'attractiontop30' }"
-                  >여행지 추천</router-link
-                >
-                <router-link :to="{ name: 'attraction' }"
-                  >여행지 주변시설</router-link
-                >
-                <i class="bi bi-list mobile-nav-toggle"></i>
-              </b-nav-item>
-            </b-navbar-nav>
-          </b-collapse>
-        </b-col>
-        <b-col cols="4">
+        <b-col cols="7">
           <b-collapse id="nav-collapse" is-nav class="float-right">
             <!-- After login -->
             <b-navbar-nav style="margin-left: 400px" v-if="userInfo">
@@ -58,6 +38,27 @@
                 <router-link :to="{ name: 'regist' }">회원가입</router-link>
               </b-nav-item>
               <i class="bi bi-list mobile-nav-toggle"></i>
+            </b-navbar-nav>
+          </b-collapse>
+        </b-col>
+        <b-col cols="3">
+          <b-collapse id="nav-collapse" is-nav class="float-right">
+            <!-- <b-navbar-nav>
+          <b-nav-item href="#">Link</b-nav-item>
+          <b-nav-item href="#" disabled>Disabled</b-nav-item>
+        </b-navbar-nav> -->
+            <b-navbar-nav>
+              <b-nav-item href="#">
+                <router-link :to="{ name: 'boardlist' }">일정 공유</router-link>
+
+                <router-link :to="{ name: 'attractiontop30' }"
+                  >여행지 추천</router-link
+                >
+                <router-link :to="{ name: 'attraction' }"
+                  >여행지 주변시설</router-link
+                >
+                <i class="bi bi-list mobile-nav-toggle"></i>
+              </b-nav-item>
             </b-navbar-nav>
           </b-collapse>
         </b-col>
