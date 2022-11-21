@@ -12,7 +12,7 @@
         <b-form id="register-form">
           <b-row>
             <b-col></b-col>
-            <b-col cols="8" style="margin: auto">
+            <b-col cols="6">
               <b-input-group-prepend>
                 <span
                   ><font-awesome-icon
