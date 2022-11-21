@@ -54,6 +54,8 @@ import {
   faEnvelope,
   faKey,
   faCheck,
+  
+  
 } from "@fortawesome/free-solid-svg-icons";
 library.add(
   faBed,
@@ -86,7 +88,8 @@ library.add(
   faEnvelope,
   faKey,
   faCheck,
-  faAddressCard
+  faAddressCard,
+  
 );
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);

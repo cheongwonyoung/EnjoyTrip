@@ -13,6 +13,7 @@ export default {
       markers: [],
       overlays: [],
       markerInfo: [],
+      seletedMarker: null,
     };
   },
   props: {
@@ -156,8 +157,10 @@ export default {
           let marker = new kakao.maps.Marker({
             map: this.map,
             position: markerPosition,
+            clickable: true,
           });
           console.log(place);
+          // var iwRemoveable = true;
           var content =
             '<div class="wrap">' +
             '    <div class="info">' +
@@ -172,21 +175,49 @@ export default {
             '            <div class="desc">' +
             `                <div class="ellipsis">${place.addr1}</div>` +
             `                <div class="jibun ellipsis">${place.tel}</div>` +
-            `                <div><b-icon-arrow-up></b-icon-arrow-up><a href="https://map.naver.com/v5/search/${place.title}" target="_blank" class="link">지도</a></div>` +
+            `                <div><a href="https://map.naver.com/v5/search/${place.title}" target="_blank" class="link"><i class="fa-solid fa-map-location-dot fa-xl"></i> 지도</a>
+            <a href="https://www.instagram.com/explore/tags/${place.title}" target="_blank" class="link"><i class="fa-brands fa-instagram fa-xl"></i>인스타그램</a></div>` +
             "            </div>" +
             "        </div>" +
             "    </div>" +
             "</div>";
 
-          var overlay = new kakao.maps.CustomOverlay({
-            content: content,
-            map: this.map,
-            position: marker.getPosition(),
-          });
+          // var infowindow = new kakao.maps.InfoWindow({
+          //   content: content,
+          //   // map: this.map,
+          //   // position: marker.getPosition(),
+          //   removable: iwRemoveable,
+          // });
 
           // 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
-          kakao.maps.event.addListener(marker, "click", function () {
-            overlay.setMap(this.map);
+          kakao.maps.event.addListener(marker, "click", () => {
+            // overlay.setMap(this.map);
+            var overlay = new kakao.maps.CustomOverlay({
+              content: content,
+              map: this.map,
+              position: marker.getPosition(),
+            });
+            this.setOverlays(null);
+
+            if (!this.seletedMarker || this.seletedMarker !== marker) {
+              // 클릭된 마커 객체가 null이 아니면
+              // 클릭된 마커의 커스텀 오버레이를 닫고
+
+              // 생성된 오버레이를 배열에 추가합니다
+              this.overlays.push(overlay);
+
+              // 현재 클릭된 마커의 커스텀 오버레이를 띄운다
+              overlay.setMap(this.map);
+
+              var closeBtn = document.querySelector(".map-close");
+              closeBtn.addEventListener("click", () => {
+                overlay.setMap(null);
+              });
+            }
+
+            this.seletedMarker = marker;
+
+            // infowindow.open(this.map, marker);
           });
 
           marker.setMap(this.map);
@@ -221,6 +252,7 @@ export default {
   padding: 0;
   margin: 0;
 }
+
 .wrap .info {
   width: 286px;
   height: 120px;
