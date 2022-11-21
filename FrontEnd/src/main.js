@@ -5,6 +5,11 @@ import store from "./store";
 
 import vueCookies from "vue-cookies";
 
+	
+//carousel
+import VueCarousel from "vue-carousel";
+Vue.use(VueCarousel);
+
 // Argon 입니답
 // import Argon from '@/plugins/argon-kit'
 // Vue.use(Argon);

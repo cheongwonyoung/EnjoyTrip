@@ -208,7 +208,8 @@ export default {
           .then(({ data }) => {
             console.log("data1=" + data[1]);
             this.selectedGungu = data[0].sigunguCode;
-            this.selectedArea = data[0].areaCode;
+            // this.selectedArea = data[0].areaCode;
+
             this.portfolios.push(...data);
             console.log("default reco = ");
             console.log(this.portfolios);
@@ -228,7 +229,10 @@ export default {
     }
     http.get("attraction/sido").then(({ data }) => {
       // this.optionsArea.push({ areaCode: null, areaName: "선택하세요" });
+      this.optionsArea = [];
+      this.optionsArea.push("시/도 선택");
       this.optionsArea.push(...data);
+      this.selectedArea = this.optionsArea[0];
       // console.log("sido = " + data[0].areaCode);
       // this.selectedArea = data[0].areaCode;
     });

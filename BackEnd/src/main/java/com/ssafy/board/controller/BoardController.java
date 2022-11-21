@@ -39,6 +39,8 @@ import com.ssafy.board.model.service.BoardService;
 import com.ssafy.board.model.service.BoardServiceImpl;
 import com.ssafy.user.model.UserDto;
 
+import net.bytebuddy.description.field.FieldDescription.InGenericShape;
+
 //@WebServlet("/board")
 @RestController
 @RequestMapping("/boardcon")
@@ -92,6 +94,8 @@ public class BoardController extends HttpServlet {
 		logger.debug(map.get("attIdList").toString());
 		logger.debug("attDescList");
 		logger.debug(map.get("attDescList").toString());
+		logger.debug("userid");
+		logger.debug(map.get("userId").toString());
 		
 		HttpSession session = request.getSession();
 //		UserDto user = (UserDto) session.getAttribute("userInfo");
@@ -100,20 +104,22 @@ public class BoardController extends HttpServlet {
 			BoardDto board = new BoardDto();
 			board.setTitle((String) map.get("title"));
 			board.setThumbNail((String) map.get("thumbnail"));
+			board.setUserId((String)map.get("userId"));
+//			board.setUserId("임시 아이디입니다");
 			
-//			board.setUserId(user.getUserId());
-			board.setUserId("임시 아이디입니다");
-
-			ArrayList<String> attIds = (ArrayList<String>) map.get("attIdList");
+			ArrayList<Integer> attIds = (ArrayList<Integer>) map.get("attIdList");
 			ArrayList<String> attDescs = (ArrayList<String>) map.get("attDescList");
 			List<BoardContentDto> contents = new ArrayList<>();
 			int size = attIds.size();
+			logger.debug("여기요");
+//			logger.debug(attIds.toString());
+//			logger.debug(attIds.get(0));
 			logger.debug(Integer.toString(size));
 			for (int i = 0; i < size; i++) {
 				String id = "attractionId" + i;
 				String desc = "attractionDesc" + i;
 				BoardContentDto bcd = new BoardContentDto();
-				bcd.setContentId(Integer.parseInt(attIds.get(i)));
+				bcd.setContentId(attIds.get(i));
 				bcd.setContentDesc(attDescs.get(i));
 				contents.add(bcd);
 			}
