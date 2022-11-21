@@ -10,12 +10,34 @@
 
       <b-col cols="6">
         <b-form id="register-form">
-          <b-form-group
-            class="mt-3"
-            id="input-group-name"
-            label="Name :"
-            label-for="input-name"
-          >
+          <b-row>
+            <b-col></b-col>
+            <b-col cols="8" style="margin: auto">
+              <b-input-group-prepend>
+                <span
+                  ><font-awesome-icon
+                    icon="fa-regular fa-address-card"
+                    id="person"
+                /></span>
+                <b-input-group-prepend
+                  style="margin-left: 10px; font-size: 20px; line-height: 80px"
+                >
+                  Sign Up
+                </b-input-group-prepend></b-input-group-prepend
+              >
+            </b-col>
+            <b-col></b-col>
+          </b-row>
+
+          <b-input-group class="mt-5">
+            <b-input-group-prepend>
+              <span class="input-group-text"
+                ><font-awesome-icon icon="fa-solid fa-person"
+              /></span>
+            </b-input-group-prepend>
+            <b-input-group-prepend class="input-group-text" style="width: auto"
+              >UserName</b-input-group-prepend
+            >
             <b-form-input
               id="input-name"
               v-model="userDto.userName"
@@ -23,19 +45,17 @@
               placeholder="Enter Name"
               required
             ></b-form-input>
-          </b-form-group>
+          </b-input-group>
 
-          <b-form-group
-            class="mt-5"
-            id="input-group-id"
-            label="ID(email) :"
-            label-for="input-id"
-          >
-            <div
-              class="float-end"
-              id="idcheck-result"
-              style="font-size: 15px"
-            ></div>
+          <b-input-group class="mt-5">
+            <b-input-group-prepend>
+              <span class="input-group-text"
+                ><font-awesome-icon icon="fa-solid fa-envelope"
+              /></span>
+            </b-input-group-prepend>
+            <b-input-group-prepend class="input-group-text" style="width: auto"
+              >ID(email)</b-input-group-prepend
+            >
             <b-form-input
               id="input-id"
               v-model="userDto.userId"
@@ -44,14 +64,22 @@
               required
               @input="idChecker"
             ></b-form-input>
-          </b-form-group>
+          </b-input-group>
+          <div
+            class="float-end"
+            id="idcheck-result"
+            style="font-size: 15px"
+          ></div>
 
-          <b-form-group
-            class="mt-5"
-            id="input-group-pwd"
-            label="Password :"
-            label-for="input-pwd"
-          >
+          <b-input-group class="mt-5">
+            <b-input-group-prepend>
+              <span class="input-group-text"
+                ><font-awesome-icon icon="fa-solid fa-key"
+              /></span>
+            </b-input-group-prepend>
+            <b-input-group-prepend class="input-group-text" style="width: auto"
+              >Password</b-input-group-prepend
+            >
             <b-form-input
               id="input-pwd"
               v-model="userDto.userPwd"
@@ -59,14 +87,17 @@
               placeholder="Enter Password"
               required
             ></b-form-input>
-          </b-form-group>
+          </b-input-group>
 
-          <b-form-group
-            class="mt-5"
-            id="input-group-pwdcheck"
-            label="Check Password :"
-            label-for="input-pwdcheck"
-          >
+          <b-input-group class="mt-5">
+            <b-input-group-prepend>
+              <span class="input-group-text"
+                ><font-awesome-icon icon="fa-solid fa-check"
+              /></span>
+            </b-input-group-prepend>
+            <b-input-group-prepend class="input-group-text" style="width: auto"
+              >Check Password</b-input-group-prepend
+            >
             <b-form-input
               id="input-pwdcheck"
               v-model="userpwd2"
@@ -74,7 +105,8 @@
               placeholder="Enter Password Again"
               required
             ></b-form-input>
-          </b-form-group>
+          </b-input-group>
+
           <div class="mt-5" id="btn-box">
             <b-button
               type="button"
@@ -174,6 +206,17 @@ export default {
 </script>
 
 <style>
+#person {
+  width: 100%;
+  height: 80px;
+}
+.input-group-text {
+  width: 40px;
+  border-right: none;
+  background-color: lightgray;
+  border: 1px solid gray;
+  z-index: 1;
+}
 #register-form {
   border: 1px solid lightgray;
   border-radius: 7px;

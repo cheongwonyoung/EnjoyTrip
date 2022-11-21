@@ -16,6 +16,76 @@ import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faUser, faAddressCard } from "@fortawesome/free-regular-svg-icons";
+import { faInstagram } from "@fortawesome/free-brands-svg-icons";
+import {
+  faBed,
+  faUmbrellaBeach,
+  faUtensils,
+  faBuildingColumns,
+  faStore,
+  faPersonHiking,
+  faMapPin,
+  faPlaneDeparture,
+  faStopwatch,
+  faClock,
+  faCalendar,
+  faArrowUp,
+  faMapLocationDot,
+  faHeart,
+  faEye,
+  faShareNodes,
+  faCircleInfo,
+  faCalendarPlus,
+  faHeartCirclePlus,
+  faRightLong,
+  faPlus,
+  faInfo,
+  faMinus,
+  faSignature,
+  faPerson,
+  faEnvelope,
+  faKey,
+  faCheck,
+} from "@fortawesome/free-solid-svg-icons";
+library.add(
+  faBed,
+  faUmbrellaBeach,
+  faUtensils,
+  faBuildingColumns,
+  faStore,
+  faPersonHiking,
+  faMapPin,
+  faInstagram,
+  faPlaneDeparture,
+  faStopwatch,
+  faClock,
+  faCalendar,
+  faArrowUp,
+  faMapLocationDot,
+  faHeart,
+  faEye,
+  faUser,
+  faShareNodes,
+  faCalendarPlus,
+  faCircleInfo,
+  faHeartCirclePlus,
+  faRightLong,
+  faPlus,
+  faInfo,
+  faMinus,
+  faSignature,
+  faPerson,
+  faEnvelope,
+  faKey,
+  faCheck,
+  faAddressCard
+);
+
+Vue.component("font-awesome-icon", FontAwesomeIcon);
+
 // Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue);
 // Optionally install the BootstrapVue icon components plugin

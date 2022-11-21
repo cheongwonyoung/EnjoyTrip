@@ -153,6 +153,7 @@ export default {
   created() {
     http.get("/user/infoprofile/" + this.userInfo.userId).then((data) => {
       this.userDto = data.data.userInfo;
+      console.log(this.userDto);
     });
   },
   methods: {
@@ -161,7 +162,8 @@ export default {
       this.$router.push({ name: "editprofile" });
     },
     signoutUser() {
-      if (this.checkPwd != this.userInfo.userPwd) {
+      if (this.checkPwd != this.userDto.userPwd) {
+        console.log(this.userDto.userPwd);
         alert("현재 비밀번호가 틀렸습니다.");
         return;
       } else {
