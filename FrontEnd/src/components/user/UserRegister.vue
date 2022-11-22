@@ -1,23 +1,18 @@
 <template>
-  <div>
-    <b-row>
-      <div class="float-left">
-        <router-link to="/">Home</router-link> / 회원가입
-      </div>
-    </b-row>
+  <div class="mb-5">
     <b-row class="mt-5">
       <b-col></b-col>
 
-      <b-col cols="6">
+      <b-col cols="4">
         <b-form id="register-form">
           <b-row>
             <b-col></b-col>
             <b-col cols="6">
               <b-input-group-prepend>
                 <span
-                  ><font-awesome-icon
-                    icon="fa-regular fa-address-card"
-                    id="person"
+                  ><img
+                    :src="require('../../assets/img/signup.png')"
+                    id="img-navbar"
                 /></span>
                 <b-input-group-prepend
                   style="margin-left: 10px; font-size: 20px; line-height: 80px"
@@ -28,24 +23,6 @@
             </b-col>
             <b-col></b-col>
           </b-row>
-
-          <b-input-group class="mt-5">
-            <b-input-group-prepend>
-              <span class="input-group-text"
-                ><font-awesome-icon icon="fa-solid fa-person"
-              /></span>
-            </b-input-group-prepend>
-            <b-input-group-prepend class="input-group-text" style="width: auto"
-              >UserName</b-input-group-prepend
-            >
-            <b-form-input
-              id="input-name"
-              v-model="userDto.userName"
-              type="text"
-              placeholder="Enter Name"
-              required
-            ></b-form-input>
-          </b-input-group>
 
           <b-input-group class="mt-5">
             <b-input-group-prepend>
@@ -74,6 +51,24 @@
           <b-input-group class="mt-5">
             <b-input-group-prepend>
               <span class="input-group-text"
+                ><font-awesome-icon icon="fa-solid fa-person"
+              /></span>
+            </b-input-group-prepend>
+            <b-input-group-prepend class="input-group-text" style="width: auto"
+              >UserName</b-input-group-prepend
+            >
+            <b-form-input
+              id="input-name"
+              v-model="userDto.userName"
+              type="text"
+              placeholder="Enter Name"
+              required
+            ></b-form-input>
+          </b-input-group>
+
+          <b-input-group class="mt-5">
+            <b-input-group-prepend>
+              <span class="input-group-text"
                 ><font-awesome-icon icon="fa-solid fa-key"
               /></span>
             </b-input-group-prepend>
@@ -96,7 +91,7 @@
               /></span>
             </b-input-group-prepend>
             <b-input-group-prepend class="input-group-text" style="width: auto"
-              >Check Password</b-input-group-prepend
+              >Password</b-input-group-prepend
             >
             <b-form-input
               id="input-pwdcheck"
@@ -205,8 +200,8 @@ export default {
 };
 </script>
 
-<style>
-#person {
+<style scoped>
+#img-navbar {
   width: 100%;
   height: 80px;
 }

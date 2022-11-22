@@ -1,8 +1,7 @@
 <template>
-  <div class="container">
-    <div>Home / 여행지</div>
-    <div><h2>여행지주변시설</h2></div>
-    <b-container class="bv-example-row">
+  <div id="select-box" class="mt-5 mb-4">
+    <div class="mb-3"><h2>여행지주변시설</h2></div>
+    <div class="bv-example-row">
       <b-row>
         <b-col>
           <b-form-select
@@ -29,10 +28,12 @@
           ></b-form-select
         ></b-col>
         <b-col
-          ><b-button variant="danger" @click="recommend">Go!</b-button></b-col
+          ><b-button style="width: 100%" variant="dark" @click="recommend"
+            >Go!</b-button
+          ></b-col
         >
       </b-row>
-    </b-container>
+    </div>
   </div>
 </template>
 
@@ -94,4 +95,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+#select-box {
+  width: 80%;
+  margin: auto;
+}
+</style>

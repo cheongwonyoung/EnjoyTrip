@@ -5,7 +5,6 @@ import store from "./store";
 
 import vueCookies from "vue-cookies";
 
-	
 //carousel
 import VueCarousel from "vue-carousel";
 Vue.use(VueCarousel);
@@ -24,7 +23,7 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faUser, faAddressCard } from "@fortawesome/free-regular-svg-icons";
-import { faInstagram } from "@fortawesome/free-brands-svg-icons";
+import { faInstagram, faGithub } from "@fortawesome/free-brands-svg-icons";
 import {
   faBed,
   faUmbrellaBeach,
@@ -54,8 +53,7 @@ import {
   faEnvelope,
   faKey,
   faCheck,
-  
-  
+  faArrowsRotate,
 } from "@fortawesome/free-solid-svg-icons";
 library.add(
   faBed,
@@ -89,7 +87,8 @@ library.add(
   faKey,
   faCheck,
   faAddressCard,
-  
+  faArrowsRotate,
+  faGithub
 );
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);

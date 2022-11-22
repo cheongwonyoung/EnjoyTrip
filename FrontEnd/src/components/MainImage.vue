@@ -18,8 +18,6 @@
         img-height="100"
         v-for="idx in 18"
         :key="idx"
-        caption="Next Page"
-        text="Click below button for other pages"
         :img-src="
           require('../assets/img/background/back_' + (idx + 1) + '.jpg')
         "
@@ -46,8 +44,8 @@
         "
       >
         <em
-          >진정한 여행은 새로운 풍경을 보러 가는 것이 아니라, 세상을 바라보는 또
-          하나의 눈을 얻어오는 것이다.</em
+          >진정한 여행은 새로운 풍경을 보러 가는 것이 아니라, <br />세상을
+          바라보는 또 하나의 눈을 얻어오는 것이다.</em
         >
       </h5>
     </div>
@@ -55,59 +53,12 @@
 </template>
 
 <script>
-import http from "@/api/http.js";
 export default {
   data() {
     return {
       slide: 0,
       sliding: null,
     };
-  },
-  created() {
-    if (navigator.geolocation) {
-      // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-
-      //   console.log(this);
-
-      navigator.geolocation.getCurrentPosition((position) => {
-        var lat = position.coords.latitude; // 위도
-        var lon = position.coords.longitude; // 경도
-        console.log(lat);
-        console.log(lon);
-        http
-          .get("/attraction/defaultrecommend/" + lat + "/" + lon)
-          .then(({ data }) => {
-            console.log("data1=" + data[1]);
-            console.log(data);
-          });
-      });
-    } else {
-      let lon = 37.5012743;
-      let lat = 127.039585;
-      http
-        .get("/attraction/defaultrecommend/" + lat + "/" + lon)
-        .then(({ data }) => {
-          //   console.log(data);
-          this.portfolios.push(...data);
-        });
-    }
-    http.get("attraction/sido").then(({ data }) => {
-      // this.optionsArea.push({ areaCode: null, areaName: "선택하세요" });
-      this.optionsArea = [];
-      this.optionsArea.push("시/도 선택");
-      this.optionsArea.push(...data);
-      this.selectedArea = this.optionsArea[0];
-      // console.log("sido = " + data[0].areaCode);
-      // this.selectedArea = data[0].areaCode;
-    });
-    http.get("attraction/gugun/" + this.selectedArea).then(({ data }) => {
-      this.optionsGungu = [];
-      // this.optionsGungu.push({
-      //   sigunguCode: null,
-      //   sigunguName: "선택하세요",
-      // });
-      this.optionsGungu.push(...data);
-    });
   },
   methods: {
     onSlideStart() {

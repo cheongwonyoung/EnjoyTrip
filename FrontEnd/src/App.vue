@@ -1,21 +1,23 @@
 <template>
   <div id="app">
-    <!-- <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav> -->
-    <the-header-navbar></the-header-navbar>
+    <div id="wrapper">
+      <the-header-navbar></the-header-navbar>
 
-    <router-view />
+      <router-view />
+    </div>
+
+    <the-footer></the-footer>
   </div>
 </template>
 <script>
 import TheHeaderNavbar from "@/components/common/TheHeaderNavbar.vue";
+import TheFooter from "@/components/common/TheFooter.vue";
 
 export default {
   name: "App",
   components: {
     TheHeaderNavbar,
+    TheFooter,
   },
 };
 </script>
@@ -39,6 +41,13 @@ nav a {
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  text-decoration: underline;
+  color: gray;
+}
+
+#wrapper {
+  height: auto;
+  min-height: 100%;
+  padding-bottom: (footer높이);
 }
 </style>

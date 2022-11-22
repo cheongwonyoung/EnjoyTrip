@@ -1,162 +1,143 @@
 <template>
-  <div id="container">
-    <b-row>
-      <div class="float-left mt-3">
-        <h2>로그인</h2>
+  <div class="container mb-5" style="min-width: 1100px">
+    <b-row style="display: flex; justify-content: center">
+      <div class="mt-5">
+        <h2>Welcome to Enjoy Trip!!</h2>
       </div>
     </b-row>
-    <b-card no-body class="mt-5 mb-5">
-      <b-row no-gutters style="border-radius: 7px">
-        <b-col cols="9">
-          <b-card-img
-            :src="require('../../assets/img/background/passport_left.jpg')"
-            alt="Image"
-            class="rounded-0 card-img"
-          ></b-card-img>
-        </b-col>
-        <b-col cols="3">
-          <div>
-            <b-card-img
-              :src="require('../../assets/img/background/passport_right.jpg')"
-              class="rounded-0 card-img"
-            />
-            <b-row class="mt-3" id="div-login">
-              <b-form id="login-form">
-                <b-alert show variant="danger" v-if="isLoginError"
-                  >입력정보를 확인하세요.</b-alert
-                >
-                <b-form-checkbox
-                  class="float-right mt-1"
-                  id="checkbox-saveid"
-                  v-model="status"
-                  name="checkbox-saveid"
-                  value="checked"
-                  unchecked-value="unchecked"
-                >
-                  Remember
-                </b-form-checkbox>
-                <b-form-group
-                  class="mt-1"
-                  id="input-group-id"
-                  label="ID(email) :"
-                  label-for="input-id"
-                >
-                  <b-form-input
-                    id="input-id"
-                    v-model="userDto.userId"
+    <b-row class="mt-3">
+      <b-col></b-col>
+      <b-col cols="4">
+        <b-form id="login-form">
+          <b-form-checkbox
+            class="float-right mt-4"
+            id="checkbox-saveid"
+            v-model="status"
+            name="checkbox-saveid"
+            value="checked"
+            unchecked-value="unchecked"
+          >
+            Remember
+          </b-form-checkbox>
+          <b-form-group
+            class="mt-4"
+            id="input-group-id"
+            label="ID(email) :"
+            label-for="input-id"
+          >
+            <b-form-input
+              id="input-id"
+              v-model="userDto.userId"
+              type="email"
+              @keyup.enter="confirm"
+              placeholder="Enter ID"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-button
+            class="float-right text-danger mt-2"
+            id="btn-findpwd"
+            @click="show = true"
+            >비밀번호 찾기</b-button
+          >
+          <b-modal v-model="show" title="비밀번호 찾기">
+            <!-- Modal body -->
+            <div class="modal-body">
+              <b-form id="findpwd-form">
+                <div class="mb-3">
+                  <label for="question" class="form-label"
+                    >찾으시는 계정의 아이디를 입력하세요.</label
+                  >
+                  <input
                     type="email"
-                    @keyup.enter="confirm"
-                    placeholder="Enter ID"
-                    required
-                  ></b-form-input>
-                </b-form-group>
-
-                <b-button
-                  class="float-right text-danger"
-                  id="btn-findpwd"
-                  @click="show = true"
-                  >비밀번호 찾기</b-button
-                >
-                <b-modal v-model="show" title="비밀번호 찾기">
-                  <!-- Modal body -->
-                  <div class="modal-body">
-                    <b-form id="findpwd-form">
-                      <div class="mb-3">
-                        <label for="question" class="form-label"
-                          >찾으시는 계정의 아이디를 입력하세요.</label
-                        >
-                        <input
-                          type="email"
-                          class="form-control"
-                          id="finduserid"
-                          v-model="findUserId"
-                          placeholder="아이디(이메일)"
-                          name="finduserid"
-                        />
-                      </div>
-                      <div class="mb-3">
-                        <label for="question" class="form-label"
-                          >이름을 입력하세요.</label
-                        >
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="findusername"
-                          v-model="findUserName"
-                          placeholder="이름"
-                          name="findusername"
-                        />
-                      </div>
-                      <div class="mb-3">
-                        <p
-                          class="float-left"
-                          id="findpassword-result"
-                          style="font-size: 15px"
-                        ></p>
-                        <b-button
-                          type="button"
-                          @click="findPwd"
-                          id="btn-find-password"
-                          class="btn float-right"
-                          style="color: white; background-color: #1e4356"
-                        >
-                          찾기
-                        </b-button>
-                      </div>
-                    </b-form>
-                  </div>
-
-                  <!-- Modal footer -->
-                  <template #modal-footer>
-                    <div class="w-100">
-                      <b-button
-                        class="btn btn-outline-dark float-right"
-                        @click="finishFindPassword"
-                      >
-                        확인
-                      </b-button>
-                    </div>
-                  </template>
-                </b-modal>
-
-                <b-form-group
-                  class="mt-3"
-                  id="input-group-pwd"
-                  label="Password :"
-                  label-for="input-pwd"
-                >
-                  <b-form-input
-                    id="input-pwd"
-                    v-model="userDto.userPwd"
-                    type="password"
-                    @keyup.enter="confirm"
-                    placeholder="Enter Password"
-                    required
-                  ></b-form-input>
-                </b-form-group>
-                <div class="mt-3" id="btn-box">
+                    class="form-control"
+                    id="finduserid"
+                    v-model="findUserId"
+                    placeholder="아이디(이메일)"
+                    name="finduserid"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="question" class="form-label"
+                    >이름을 입력하세요.</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="findusername"
+                    v-model="findUserName"
+                    placeholder="이름"
+                    name="findusername"
+                  />
+                </div>
+                <div class="mb-3">
+                  <p
+                    class="float-left"
+                    id="findpassword-result"
+                    style="font-size: 15px"
+                  ></p>
                   <b-button
                     type="button"
-                    id="btn-login"
-                    class="btn"
-                    @click="confirm"
+                    @click="findPwd"
+                    id="btn-find-password"
+                    class="btn float-right"
                   >
-                    로그인
+                    찾기
                   </b-button>
-                  <b-button
-                    type="button"
-                    id="btn-mv-register"
-                    class="btn"
-                    @click="movePage"
-                    >회원가입</b-button
-                  >
                 </div>
               </b-form>
-            </b-row>
+            </div>
+
+            <!-- Modal footer -->
+            <template #modal-footer>
+              <div class="w-100">
+                <b-button
+                  class="btn btn-outline-dark float-right"
+                  id="btn-finish"
+                  @click="finishFindPassword"
+                >
+                  확인
+                </b-button>
+              </div>
+            </template>
+          </b-modal>
+
+          <b-form-group
+            class="mt-4"
+            id="input-group-pwd"
+            label="Password :"
+            label-for="input-pwd"
+          >
+            <b-form-input
+              id="input-pwd"
+              v-model="userDto.userPwd"
+              type="password"
+              @keyup.enter="confirm"
+              placeholder="Enter Password"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-alert show variant="danger" v-if="isLoginError"
+            >입력정보를 확인하세요.</b-alert
+          >
+          <div class="mt-3" id="btn-box">
+            <b-button type="button" id="btn-login" class="btn" @click="confirm">
+              로그인
+            </b-button>
+            <b-button
+              type="button"
+              id="btn-mv-register"
+              class="btn"
+              @click="movePage"
+              >회원가입</b-button
+            >
           </div>
-        </b-col>
-      </b-row>
-    </b-card>
+        </b-form>
+      </b-col>
+      <b-col></b-col>
+    </b-row>
   </div>
 </template>
 
@@ -240,18 +221,6 @@ export default {
 </script>
 
 <style scope>
-#container {
-  min-width: 1100px;
-}
-#div-login {
-  position: absolute;
-  top: 120px;
-  left: 22px;
-  width: 95%;
-  background-color: snow;
-  border-radius: 7px;
-  min-width: 250px;
-}
 .card-img {
   object-fit: cover;
 }
@@ -261,7 +230,21 @@ export default {
   padding: 20px;
   text-align: left;
 }
+#btn-find-password {
+  color: white;
+  background-color: #1e4356;
+}
+#btn-find-password:hover {
+  font-weight: bold;
+}
+#btn-finish {
+  background-color: white;
+}
+#btn-finish:hover {
+  background-color: black;
+}
 #btn-findpwd {
+  margin-bottom: 5px;
   background-color: white;
   font-size: 12px;
 }

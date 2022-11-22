@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div><h2>여행지 추천</h2></div>
+  <div class="container mt-5 mb-5">
+    <div class="mb-3"><h2>여행지 추천</h2></div>
     <b-container class="bv-example-row">
       <div class="outdiv">
         <b-row id="frow">
@@ -265,7 +265,7 @@ export default {
 
 <style>
 .btn-grp {
-  margin-right: 50px;
+  margin: 0px 25px;
   margin-top: 30px;
   margin-bottom: 30px;
   color: black;

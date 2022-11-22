@@ -1,21 +1,38 @@
 <template>
-  <div>
-    <b-row>
-      <div class="float-left">
-        <router-link to="/">Home</router-link> / 마이페이지
-      </div>
-    </b-row>
+  <div class="mb-5">
     <b-row class="mt-5">
       <b-col></b-col>
 
-      <b-col cols="6">
+      <b-col cols="4">
         <b-form id="register-form">
-          <b-form-group
-            class="mt-3"
-            id="input-group-id"
-            label="ID(email) :"
-            label-for="input-id"
-          >
+          <b-row>
+            <b-col></b-col>
+            <b-col cols="6">
+              <b-input-group-prepend>
+                <span
+                  ><img
+                    :src="require('../../assets/img/info.png')"
+                    id="img-navbar"
+                /></span>
+                <b-input-group-prepend
+                  style="margin-left: 10px; font-size: 20px; line-height: 80px"
+                >
+                  My Information
+                </b-input-group-prepend></b-input-group-prepend
+              >
+            </b-col>
+            <b-col></b-col>
+          </b-row>
+
+          <b-input-group class="mt-5">
+            <b-input-group-prepend>
+              <span class="input-group-text"
+                ><font-awesome-icon icon="fa-solid fa-envelope"
+              /></span>
+            </b-input-group-prepend>
+            <b-input-group-prepend class="input-group-text" style="width: auto"
+              >ID(email)</b-input-group-prepend
+            >
             <b-form-input
               id="input-id"
               v-model="userDto.userId"
@@ -23,14 +40,17 @@
               disabled="disabled"
               required
             ></b-form-input>
-          </b-form-group>
+          </b-input-group>
 
-          <b-form-group
-            class="mt-5"
-            id="input-group-pwd"
-            label="Password :"
-            label-for="input-pwd"
-          >
+          <b-input-group class="mt-5">
+            <b-input-group-prepend>
+              <span class="input-group-text"
+                ><font-awesome-icon icon="fa-solid fa-key"
+              /></span>
+            </b-input-group-prepend>
+            <b-input-group-prepend class="input-group-text" style="width: auto"
+              >Password</b-input-group-prepend
+            >
             <b-form-input
               id="input-pwd"
               v-model="userDto.userPwd"
@@ -38,14 +58,17 @@
               disabled="disabled"
               required
             ></b-form-input>
-          </b-form-group>
+          </b-input-group>
 
-          <b-form-group
-            class="mt-5"
-            id="input-group-name"
-            label="Name :"
-            label-for="input-name"
-          >
+          <b-input-group class="mt-5">
+            <b-input-group-prepend>
+              <span class="input-group-text"
+                ><font-awesome-icon icon="fa-solid fa-person"
+              /></span>
+            </b-input-group-prepend>
+            <b-input-group-prepend class="input-group-text" style="width: auto"
+              >UserName</b-input-group-prepend
+            >
             <b-form-input
               id="input-name"
               v-model="userDto.userName"
@@ -53,14 +76,17 @@
               disabled="disabled"
               required
             ></b-form-input>
-          </b-form-group>
+          </b-input-group>
 
-          <b-form-group
-            class="mt-5"
-            id="input-group-joinDate"
-            label="Join Date :"
-            label-for="input-joinDate"
-          >
+          <b-input-group class="mt-5">
+            <b-input-group-prepend>
+              <span class="input-group-text"
+                ><font-awesome-icon icon="fa-solid fa-check"
+              /></span>
+            </b-input-group-prepend>
+            <b-input-group-prepend class="input-group-text" style="width: auto"
+              >Join Date</b-input-group-prepend
+            >
             <b-form-input
               id="input-joinDate"
               v-model="userDto.joinDate"
@@ -68,7 +94,8 @@
               disabled="disabled"
               required
             ></b-form-input>
-          </b-form-group>
+          </b-input-group>
+
           <div class="mt-5" id="btn-box">
             <b-button
               type="button"
@@ -111,6 +138,7 @@
                 <div class="w-100">
                   <b-button
                     class="btn btn-outline-dark float-right"
+                    id="btn-signout"
                     @click="signoutUser"
                   >
                     탈퇴
@@ -189,6 +217,10 @@ export default {
 </script>
 
 <style>
+#img-navbar {
+  width: 100%;
+  height: 80px;
+}
 #register-form {
   border: 1px solid lightgray;
   border-radius: 7px;
@@ -214,5 +246,7 @@ export default {
 }
 #btn-signout:hover {
   font-weight: bold;
+  color: white;
+  background-color: #1e4356;
 }
 </style>

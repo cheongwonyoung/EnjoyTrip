@@ -99,7 +99,7 @@ export default {
       const container = document.getElementById("map");
       const options = {
         center: new kakao.maps.LatLng(this.lat, this.lon),
-        level: 5,
+        level: 3,
       };
 
       //지도 객체를 등록합니다.
@@ -280,7 +280,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 #map {
-  width: 100%;
+  margin: auto;
+  margin-bottom: 50px;
+  width: 80%;
   height: 400px;
 }
 .wrap {
