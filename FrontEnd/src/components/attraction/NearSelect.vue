@@ -46,9 +46,9 @@ export default {
       optionsArea: [],
       selectedGungu: null,
       optionsGungu: [],
-      selectedEvent: null,
+      selectedEvent: 0,
       optionsEvent: [
-        { value: null, text: "선택하세요" },
+        { value: 0, text: "선택하세요" },
         { value: "32", text: "숙박" },
         { value: "15", text: "이벤트" },
       ],
@@ -61,12 +61,13 @@ export default {
         this.optionsGungu = [];
         this.optionsGungu.push({
           sigunguCode: null,
-          sigunguName: "선택하세요",
+          sigunguName: "구/군 선택",
         });
         this.optionsGungu.push(...data);
       });
     },
     async recommend() {
+      console.log(this.selectedEvent);
       await http
         .get(
           "/attraction/recommend/" +
@@ -86,7 +87,7 @@ export default {
   created() {
     http.get("attraction/sido").then(({ data }) => {
       console.log(data);
-      this.optionsArea.push({ areaCode: null, areaName: "선택하세요" });
+      this.optionsArea.push({ areaCode: null, areaName: "시/도 선택" });
       this.optionsArea.push(...data);
     });
   },

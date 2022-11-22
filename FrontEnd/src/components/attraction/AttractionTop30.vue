@@ -1,55 +1,56 @@
 <template>
   <div class="container">
-    <div>Home / 여행지 추천</div>
     <div><h2>여행지 추천</h2></div>
     <b-container class="bv-example-row">
-      <b-row>
-        <b-col>
-          <b-form-select
-            value-field="areaCode"
-            text-field="areaName"
-            v-model="selectedArea"
-            :options="optionsArea"
-            @change="makeGungu"
-          >
-          </b-form-select>
-        </b-col>
-        <b-col>
-          <b-form-select
-            value-field="sigunguCode"
-            text-field="sigunguName"
-            v-model="selectedGungu"
-            :options="optionsGungu"
-          ></b-form-select>
-        </b-col>
-        <b-col
-          ><b-button variant="danger" @click="recommend">Go!</b-button></b-col
-        >
-      </b-row>
-      <b-row>
-        <b-button-group size="lg">
-          <b-button variant="success" @click="selectedEvent = 100">
+      <div class="outdiv">
+        <b-row id="frow">
+          <b-col>
+            <b-form-select
+              value-field="areaCode"
+              text-field="areaName"
+              v-model="selectedArea"
+              :options="optionsArea"
+              @change="makeGungu"
+            >
+            </b-form-select>
+          </b-col>
+          <b-col>
+            <b-form-select
+              value-field="sigunguCode"
+              text-field="sigunguName"
+              v-model="selectedGungu"
+              :options="optionsGungu"
+              @change="recommend"
+            ></b-form-select>
+          </b-col>
+        </b-row>
+      </div>
+      <div class="outdiv">
+        <b-row>
+          <b-button class="btn-grp" @click="selectedEvent = 100">
             전체
           </b-button>
-          <b-button variant="info" @click="selectedEvent = 12">관광지</b-button>
-          <b-button variant="outline-info" @click="selectedEvent = 14"
+          <b-button class="btn-grp" @click="selectedEvent = 12"
+            >관광지</b-button
+          >
+          <b-button class="btn-grp" @click="selectedEvent = 14"
             >문화시설</b-button
           >
-          <b-button variant="danger" @click="selectedEvent = 15"
+          <b-button class="btn-grp" @click="selectedEvent = 15"
             >행사/공연/축제</b-button
           >
-          <b-button variant="primary" @click="selectedEvent = 28"
+          <b-button class="btn-grp" @click="selectedEvent = 28"
             >레포츠</b-button
           >
-          <b-button variant="secondary" @click="selectedEvent = 32">
+          <b-button class="btn-grp" @click="selectedEvent = 32">
             숙박
           </b-button>
-          <b-button variant="dark" @click="selectedEvent = 38">쇼핑</b-button>
-          <b-button variant="warning" @click="selectedEvent = 39"
+          <b-button class="btn-grp" @click="selectedEvent = 38">쇼핑</b-button>
+          <b-button class="btn-grp" @click="selectedEvent = 39"
             >음식점</b-button
           >
-        </b-button-group>
-      </b-row>
+        </b-row>
+      </div>
     </b-container>
     <div>
       <b-card-group columns>
@@ -140,20 +141,7 @@ export default {
         // 전체 보이기
         else {
           console.log("누른 이벤트 = " + 100);
-          http
-            .get(
-              "/attraction/recommend/" +
-                this.selectedArea +
-                "/" +
-                this.selectedGungu
-            )
-            .then((data) => {
-              // console.log(data.data.filter((dt) => dt.contentTypeId == this.selectedEvent));
-              this.portfolios = data.data.filter(
-                (dt) => dt.contentTypeId != this.selectedEvent
-              );
-              console.log(this.portfolios);
-            });
+          this.recommend();
         }
       },
     },
@@ -162,34 +150,61 @@ export default {
     makeGungu() {
       http.get("attraction/gugun/" + this.selectedArea).then(({ data }) => {
         this.optionsGungu = [];
-        // this.optionsGungu.push({
-        //   sigunguCode: null,
-        //   sigunguName: "선택하세요",
-        // });
         this.optionsGungu.push(...data);
+        this.optionsGungu = [];
+        this.optionsGungu.push("구/군 선택");
+        this.optionsGungu.push(...data);
+        this.selectedGungu = this.optionsGungu[0];
       });
     },
+    goMethod() {},
     recommend() {
-      http
-        .get(
-          "/attraction/recommend/" +
-            this.selectedArea +
-            "/" +
-            this.selectedGungu
-        )
-        .then((data) => {
-          console.log(data);
-          console.log(
-            data.data.filter((dt) => dt.contentTypeId == this.selectedEvent)
-          );
-          if (this.selectedEvent == 100) {
-            this.portfolios = data.data;
-          } else {
-            this.portfolios = data.data.filter(
-              (dt) => dt.contentTypeId == this.selectedEvent
+      console.log("==========");
+      console.log(this.selectedArea);
+      console.log("==========");
+      if (this.selectedArea > 0) {
+        http
+          .get(
+            "/attraction/recommend/" +
+              this.selectedArea +
+              "/" +
+              this.selectedGungu
+          )
+          .then((data) => {
+            console.log(data);
+            console.log(
+              data.data.filter((dt) => dt.contentTypeId == this.selectedEvent)
             );
-          }
+            if (this.selectedEvent == 100) {
+              this.portfolios = data.data;
+            } else {
+              this.portfolios = data.data.filter(
+                (dt) => dt.contentTypeId == this.selectedEvent
+              );
+            }
+          });
+      } else {
+        navigator.geolocation.getCurrentPosition((position) => {
+          var lat = position.coords.latitude; // 위도
+          var lon = position.coords.longitude; // 경도
+          console.log("화인");
+          console.log(lat);
+          console.log(lon);
+          http
+            .get("/attraction/defaultrecommend/" + lat + "/" + lon)
+            .then(({ data }) => {
+              console.log(data);
+              console.log(this.selectedEvent);
+              if (this.selectedEvent == 100) {
+                this.portfolios = data;
+              } else {
+                this.portfolios = data.filter(
+                  (dt) => dt.contentTypeId == this.selectedEvent
+                );
+              }
+            });
         });
+      }
     },
   },
   created() {
@@ -248,4 +263,24 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.btn-grp {
+  margin-right: 50px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  color: black;
+  background-color: white;
+  box-shadow: 5px 2px 2px gray;
+}
+.btn-grp:hover {
+  color: white;
+  background-color: black;
+}
+.outdiv {
+  display: flex;
+  justify-content: center;
+}
+#frow {
+  width: 50%;
+}
+</style>

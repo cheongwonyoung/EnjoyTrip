@@ -20,20 +20,21 @@ export default {
     recoList: Array,
   },
   mounted() {
-    if (window.kakao && window.kakao.maps) {
-      this.initMap();
-      // var locPosition = new kakao.maps.LatLng(this.lat, this.lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-      //   message = '<div style="padding:5px;">여기에 계신가요?!</div>'; // 인포윈도우에 표시될 내용입니다
+    // if (window.kakao && window.kakao.maps) {
+    //   this.initMap();
+    //   // var locPosition = new kakao.maps.LatLng(this.lat, this.lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+    //   //   message = '<div style="padding:5px;">여기에 계신가요?!</div>'; // 인포윈도우에 표시될 내용입니다
 
-      // // 마커와 인포윈도우를 표시합니다
-      // this.displayMarker(locPosition, message);
-    } else {
-      const script = document.createElement("script");
-      /* global kakao */
-      script.onload = () => kakao.maps.load(this.initMap);
-      script.src = "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=915cffed372954b7b44804ed422b9cf0";
-      document.head.appendChild(script);
-    }
+    //   // // 마커와 인포윈도우를 표시합니다
+    //   // this.displayMarker(locPosition, message);
+    // } else {
+    const script = document.createElement("script");
+    /* global kakao */
+    script.onload = () => kakao.maps.load(this.initMap);
+    script.src =
+      "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=915cffed372954b7b44804ed422b9cf0";
+    document.head.appendChild(script);
+    // }
   },
   created() {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -50,6 +51,7 @@ export default {
         map: this.map,
         image: markerImage,
         position: locPosition,
+        clickable: true,
       });
 
       // this.markers.push(marker);
@@ -109,7 +111,11 @@ export default {
       var imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 
       // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-      var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+      var markerImage = new kakao.maps.MarkerImage(
+        imageSrc,
+        imageSize,
+        imageOption
+      );
 
       var locPosition = new kakao.maps.LatLng(this.lat, this.lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
         message = '<div style="padding:5px;">현재위치</div>'; // 인포윈도우에 표시될 내용입니다
@@ -132,14 +138,66 @@ export default {
           this.markers[i].setMap(null);
         }
         // 지도 이동
-        var moveLatLon = new kakao.maps.LatLng(recoList[0].lattitude, recoList[0].longitude);
+        var moveLatLon = new kakao.maps.LatLng(
+          recoList[0].lattitude,
+          recoList[0].longitude
+        );
         this.map.panTo(moveLatLon); // 부드럽게 이동(현지도 안에면)
 
         console.log("test");
         console.log(recoList);
         recoList.forEach((place) => {
           // console.log(Object.keys(place));
-          let markerPosition = new kakao.maps.LatLng(place.lattitude, place.longitude);
+          // contentTypeId
+
+          let markerPosition = new kakao.maps.LatLng(
+            place.lattitude,
+            place.longitude
+          );
+
+          var imageSrc;
+          // 관광지
+          if (this.selectedEvent == 12) {
+            imageSrc = require("@/assets/img/travle.png"); // 마커이미지의 주소입니다
+          }
+          // 문화시설
+          else if (place.contentTypeId == 14) {
+            imageSrc = require("@/assets/img/culture_land.png"); // 마커이미지의 주소입니다
+          }
+          // 행사/공연/축제
+          else if (place.contentTypeId == 15) {
+            imageSrc = require("@/assets/img/event.png"); // 마커이미지의 주소입니다
+          }
+          // 레포츠
+          else if (place.contentTypeId == 28) {
+            imageSrc = require("@/assets/img/house_temp.png"); // 마커이미지의 주소입니다
+          }
+          // 숙박
+          else if (place.contentTypeId == 32) {
+            imageSrc = require("@/assets/img/house.png"); // 마커이미지의 주소입니다
+          }
+          // 쇼핑
+          else if (place.contentTypeId == 38) {
+            imageSrc = require("@/assets/img/shopping.png"); // 마커이미지의 주소입니다
+          }
+          // 음식점
+          else if (place.contentTypeId == 39) {
+            imageSrc = require("@/assets/img/food.png"); // 마커이미지의 주소입니다
+          }
+          // 전체 보이기
+          else {
+            imageSrc = require("@/assets/img/etc.png"); // 마커이미지의 주소입니다
+          }
+
+          var imageSize = new kakao.maps.Size(60, 60); // 마커이미지의 크기입니다
+          var imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+          // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+          var markerImage = new kakao.maps.MarkerImage(
+            imageSrc,
+            imageSize,
+            imageOption
+          );
 
           // var iwContent;
 
@@ -147,6 +205,7 @@ export default {
             map: this.map,
             position: markerPosition,
             clickable: true,
+            image: markerImage,
           });
           console.log(place);
           // var iwRemoveable = true;
