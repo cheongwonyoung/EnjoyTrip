@@ -8,6 +8,7 @@ export default {
   name: "KakaoMap",
   data() {
     return {
+      inwin: null,
       lat: null,
       lon: null,
       markers: [],
@@ -63,6 +64,7 @@ export default {
         content: iwContent,
         removable: iwRemoveable,
       });
+      this.inwin = infowindow;
       console.log("??dfsa");
       // 인포윈도우를 마커위에 표시합니다
       infowindow.open(this.map, marker);
@@ -129,6 +131,7 @@ export default {
       deep: true, // 배열 내부까지 본다
 
       handler(recoList) {
+        this.inwin.close();
         console.log("???1!!");
         console.log(this.map);
         // let map2 = this.map;
@@ -146,6 +149,9 @@ export default {
 
         console.log("test");
         console.log(recoList);
+        // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
+        var bounds = new kakao.maps.LatLngBounds();
+
         recoList.forEach((place) => {
           // console.log(Object.keys(place));
           // contentTypeId
@@ -155,41 +161,44 @@ export default {
             place.longitude
           );
 
+          // LatLngBounds 객체에 좌표를 추가합니다
+          bounds.extend(markerPosition);
+
           var imageSrc;
           // 관광지
           if (this.selectedEvent == 12) {
-            imageSrc = require("@/assets/img/travle.png"); // 마커이미지의 주소입니다
+            imageSrc = require("@/assets/img/marker/travel.png"); // 마커이미지의 주소입니다
           }
           // 문화시설
           else if (place.contentTypeId == 14) {
-            imageSrc = require("@/assets/img/culture_land.png"); // 마커이미지의 주소입니다
+            imageSrc = require("@/assets/img/marker/culture.png"); // 마커이미지의 주소입니다
           }
           // 행사/공연/축제
           else if (place.contentTypeId == 15) {
-            imageSrc = require("@/assets/img/event.png"); // 마커이미지의 주소입니다
+            imageSrc = require("@/assets/img/marker/festival.png"); // 마커이미지의 주소입니다
           }
           // 레포츠
           else if (place.contentTypeId == 28) {
-            imageSrc = require("@/assets/img/house_temp.png"); // 마커이미지의 주소입니다
+            imageSrc = require("@/assets/img/marker/sports.png"); // 마커이미지의 주소입니다
           }
           // 숙박
           else if (place.contentTypeId == 32) {
-            imageSrc = require("@/assets/img/house.png"); // 마커이미지의 주소입니다
+            imageSrc = require("@/assets/img/marker/hotel.png"); // 마커이미지의 주소입니다
           }
           // 쇼핑
           else if (place.contentTypeId == 38) {
-            imageSrc = require("@/assets/img/shopping.png"); // 마커이미지의 주소입니다
+            imageSrc = require("@/assets/img/marker/shopping.png"); // 마커이미지의 주소입니다
           }
           // 음식점
           else if (place.contentTypeId == 39) {
-            imageSrc = require("@/assets/img/food.png"); // 마커이미지의 주소입니다
+            imageSrc = require("@/assets/img/marker/eat.png"); // 마커이미지의 주소입니다
           }
           // 전체 보이기
           else {
-            imageSrc = require("@/assets/img/etc.png"); // 마커이미지의 주소입니다
+            imageSrc = require("@/assets/img/marker/etc.png"); // 마커이미지의 주소입니다
           }
 
-          var imageSize = new kakao.maps.Size(60, 60); // 마커이미지의 크기입니다
+          var imageSize = new kakao.maps.Size(30, 30); // 마커이미지의 크기입니다
           var imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 
           // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
@@ -271,6 +280,7 @@ export default {
           marker.setMap(this.map);
           this.markers.push(marker);
         });
+        this.map.setBounds(bounds);
       },
     },
   },
@@ -377,5 +387,8 @@ export default {
 }
 .info .link {
   color: #5085bb;
+}
+#map {
+  z-index: 0;
 }
 </style>

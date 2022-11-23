@@ -8,7 +8,10 @@
       </b-row>
       <b-row class="mb-3">
         <b-col class="text-right">
-          <b-button variant="outline-primary" @click="moveWrite()"
+          <b-button
+            variant="outline-primary"
+            @click="moveWrite()"
+            v-if="userInfo"
             >일정 공유하기</b-button
           >
         </b-col>
@@ -37,13 +40,18 @@
 
 <script>
 import http from "@/api/http.js";
+import { mapState } from "vuex";
 
+const memberStore = "memberStore";
 export default {
   name: "BoardList",
   data() {
     return {
       articles: [],
     };
+  },
+  computed: {
+    ...mapState(memberStore, ["userInfo"]),
   },
   methods: {
     moveWrite() {
