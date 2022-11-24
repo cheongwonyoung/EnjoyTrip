@@ -75,8 +75,12 @@ export default {
 };
 </script>
 
-<style scope>
+<style>
+.card-title {
+  line-height: 50px;
+  margin-bottom: 0px;
+}
 .card-body {
-  height: 70px;
+  height: 100px;
 }
 </style>

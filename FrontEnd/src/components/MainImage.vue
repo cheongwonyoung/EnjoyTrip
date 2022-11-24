@@ -259,7 +259,7 @@ export default {
 }
 .card-body {
   margin: auto;
-  height: 70px;
+  height: 100px;
 }
 .modal-footer button {
   color: #1e4356;

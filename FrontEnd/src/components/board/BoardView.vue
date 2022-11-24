@@ -4,13 +4,10 @@
       <b-row>
         <b-col style="position: relative; padding: 0px">
           <b-alert show
-            ><h2 style="padding-top: 5px">
-              "{{ userInfo.userName }}"의 여행 계획
-            </h2>
+            ><h2 style="padding-top: 5px">"{{ userName }}"의 여행 계획</h2>
             <b-button
               variant="outline-dark"
               @click="movePage()"
-              v-if="userInfo"
               style="position: absolute; right: 10px; top: 20px"
               >목록으로 돌아가기</b-button
             ></b-alert
@@ -22,7 +19,7 @@
           <h2>{{ article.title }}</h2>
           <div>
             <p>
-              <span>{{ userInfo.userName }}</span> |
+              <span>{{ userName }}</span> |
               <span>{{ article.registerDate }}</span>
             </p>
           </div>
@@ -60,7 +57,7 @@
         </div>
       </b-card-group>
 
-      <b-row class="mb-1">
+      <b-row class="mb-1" v-if="userInfo.userId == article.userId">
         <b-col class="text-right">
           <b-button variant="danger" @click="deleteView()">삭제하기</b-button>
         </b-col>
@@ -80,6 +77,8 @@ export default {
     return {
       article: {},
       contentList: [],
+      userId: "",
+      userName: "",
     };
   },
   computed: {
@@ -108,13 +107,23 @@ export default {
       this.$router.push({ name: "boardlist" });
     },
   },
-  created() {
-    http.get("/boardcon/view/" + this.$route.params.planid).then(({ data }) => {
-      console.log(data);
-      this.article = data;
-      this.contentList = data.contentList;
-      console.log("!!!");
-      console.log(this.contentList);
+  async created() {
+    await http
+      .get("/boardcon/view/" + this.$route.params.planid)
+      .then(({ data }) => {
+        console.log(data);
+        this.article = data;
+        this.contentList = data.contentList;
+        console.log("!!!");
+        console.log(this.contentList);
+      });
+
+    await http.get("/user/infoprofile/" + this.article.userId).then((data) => {
+      this.userName = data.data.userInfo.userName;
+      this.userId = data.data.userInfo.userId;
+      console.log("유저 이름 잘 찍혀? ");
+      console.log(this.userName);
+      console.log(data.data.userInfo.userName);
     });
   },
 };

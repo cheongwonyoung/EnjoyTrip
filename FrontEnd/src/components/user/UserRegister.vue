@@ -225,4 +225,10 @@ export default {
 #btn-register:hover {
   font-weight: bold;
 }
+.profile-user-img-edit {
+  width: 90px;
+  height: 90px;
+  border-radius: 100%;
+  overflow: hidden;
+}
 </style>

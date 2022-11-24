@@ -128,36 +128,40 @@ export default {
     ...mapGetters(["checkUserInfo"]),
   },
   created() {
-    console.log("created");
-    console.log(this.userInfo);
-    if (this.userInfo.profileImg) {
-      this.preview =
-        "http://localhost:80/upload/file/" +
-        this.userInfo.saveFolder +
-        "/" +
-        this.userInfo.profileImg;
-      console.log("프로필 있음!!!!!!!!!!!!!");
+    if (this.isLogin) {
+      console.log("created");
+      console.log(this.userInfo);
+      if (this.userInfo.profileImg) {
+        this.preview =
+          "http://localhost:80/upload/file/" +
+          this.userInfo.saveFolder +
+          "/" +
+          this.userInfo.profileImg;
+        console.log("프로필 있음!!!!!!!!!!!!!");
+        console.log(this.preview);
+      } else {
+        this.preview = require("../../assets/img/user.png");
+      }
       console.log(this.preview);
-    } else {
-      this.preview = require("../../assets/img/user.png");
     }
-    console.log(this.preview);
   },
   updated() {
-    console.log("created");
-    console.log(this.userInfo);
-    if (this.userInfo.profileImg) {
-      this.preview =
-        "http://localhost:80/upload/file/" +
-        this.userInfo.saveFolder +
-        "/" +
-        this.userInfo.profileImg;
-      console.log("프로필 있음!!!!!!!!!!!!!");
+    if (this.isLogin) {
+      console.log("created");
+      console.log(this.userInfo);
+      if (this.userInfo.profileImg) {
+        this.preview =
+          "http://localhost:80/upload/file/" +
+          this.userInfo.saveFolder +
+          "/" +
+          this.userInfo.profileImg;
+        console.log("프로필 있음!!!!!!!!!!!!!");
+        console.log(this.preview);
+      } else {
+        this.preview = require("../../assets/img/user.png");
+      }
       console.log(this.preview);
-    } else {
-      this.preview = require("../../assets/img/user.png");
     }
-    console.log(this.preview);
   },
   methods: {
     ...mapActions(memberStore, ["userLogout"]),

@@ -186,21 +186,23 @@ export default {
       console.log(map);
       await this.userConfirm(map);
 
-      await http
-        .get("/user/infoprofile/" + this.userDto.userId)
-        .then((data) => {
-          console.log("data 찍어볼거야 로그인했어 이제 ㅠㅠ");
-          console.log(data);
-          this.editUserInfo(data.data.userInfo);
-        });
-
-      let token = sessionStorage.getItem("access-token");
-      console.log("1. confirm() token >> " + token);
       if (this.isLogin) {
-        await this.getUserInfo(token);
-        console.log("4. confirm() userInfo :: ", this.userInfo);
+        await http
+          .get("/user/infoprofile/" + this.userDto.userId)
+          .then((data) => {
+            console.log("data 찍어볼거야 로그인했어 이제 ㅠㅠ");
+            console.log(data);
+            this.editUserInfo(data.data.userInfo);
+          });
 
-        this.$router.push({ name: "home" });
+        let token = sessionStorage.getItem("access-token");
+        console.log("1. confirm() token >> " + token);
+        if (this.isLogin) {
+          await this.getUserInfo(token);
+          console.log("4. confirm() userInfo :: ", this.userInfo);
+
+          this.$router.push({ name: "home" });
+        }
       }
     },
     movePage() {

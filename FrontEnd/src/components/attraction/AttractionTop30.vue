@@ -277,7 +277,7 @@ export default {
 
 <style scope>
 .card-body {
-  height: 80px;
+  height: 100px;
 }
 .btn-grp {
   margin: 0px 25px;
