@@ -7,24 +7,20 @@
         <b-form id="register-form">
           <b-row>
             <b-col></b-col>
-            <b-col cols="6">
-              <b-input-group-prepend>
-                <span
-                  ><img
-                    :src="require('../../assets/img/signup.png')"
-                    id="img-navbar"
-                /></span>
-                <b-input-group-prepend
-                  style="margin-left: 10px; font-size: 20px; line-height: 80px"
-                >
-                  Sign Up
-                </b-input-group-prepend></b-input-group-prepend
-              >
+            <b-col
+              cols="6"
+              style="text-align: center"
+              class="profile-user-img-edit"
+            >
+              <img
+                :src="require('../../assets/img/user.png')"
+                class="profile-user-img-edit"
+              />
             </b-col>
             <b-col></b-col>
           </b-row>
 
-          <b-input-group class="mt-5">
+          <b-input-group class="mt-4">
             <b-input-group-prepend>
               <span class="input-group-text"
                 ><font-awesome-icon icon="fa-solid fa-envelope"

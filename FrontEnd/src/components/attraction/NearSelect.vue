@@ -1,6 +1,6 @@
 <template>
   <div id="select-box" class="mt-5 mb-4">
-    <div class="mb-3"><h2>여행지주변시설</h2></div>
+    <div class="mb-3"><h2>여행지 주변시설</h2></div>
     <div class="bv-example-row">
       <b-row>
         <b-col>
