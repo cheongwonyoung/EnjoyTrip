@@ -6,7 +6,7 @@
   ![Untitled](https://user-images.githubusercontent.com/86768006/203838828-d7502014-86f9-4f96-8536-5760164f95ad.png)
 - Class Diagram
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/629e4726-7a3c-4988-b16f-54a6e6c394d8/Untitled.png)
+![Untitled2](https://user-images.githubusercontent.com/86768006/203839402-50e9bce0-93b5-4400-9922-56bf2f7ed3f7.png)
 
 - usecase
 
