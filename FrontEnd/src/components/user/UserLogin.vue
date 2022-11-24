@@ -170,7 +170,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(memberStore, ["userConfirm", "getUserInfo"]),
+    ...mapActions(memberStore, ["editUserInfo", "userConfirm", "getUserInfo"]),
     async confirm() {
       let map = new Map();
       map.set("userId", this.userDto.userId);
@@ -185,6 +185,15 @@ export default {
 
       console.log(map);
       await this.userConfirm(map);
+
+      await http
+        .get("/user/infoprofile/" + this.userDto.userId)
+        .then((data) => {
+          console.log("data 찍어볼거야 로그인했어 이제 ㅠㅠ");
+          console.log(data);
+          this.editUserInfo(data.data.userInfo);
+        });
+
       let token = sessionStorage.getItem("access-token");
       console.log("1. confirm() token >> " + token);
       if (this.isLogin) {

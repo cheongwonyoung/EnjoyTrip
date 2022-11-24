@@ -128,21 +128,35 @@ export default {
     ...mapGetters(["checkUserInfo"]),
   },
   created() {
-    this.preview =
-      "http://localhost:80/upload/file/" +
-      this.userInfo.saveFolder +
-      "/" +
-      this.userInfo.profileImg;
-
+    console.log("created");
+    console.log(this.userInfo);
+    if (this.userInfo.profileImg) {
+      this.preview =
+        "http://localhost:80/upload/file/" +
+        this.userInfo.saveFolder +
+        "/" +
+        this.userInfo.profileImg;
+      console.log("프로필 있음!!!!!!!!!!!!!");
+      console.log(this.preview);
+    } else {
+      this.preview = require("../../assets/img/user.png");
+    }
     console.log(this.preview);
   },
   updated() {
-    this.preview =
-      "http://localhost:80/upload/file/" +
-      this.userInfo.saveFolder +
-      "/" +
-      this.userInfo.profileImg;
-
+    console.log("created");
+    console.log(this.userInfo);
+    if (this.userInfo.profileImg) {
+      this.preview =
+        "http://localhost:80/upload/file/" +
+        this.userInfo.saveFolder +
+        "/" +
+        this.userInfo.profileImg;
+      console.log("프로필 있음!!!!!!!!!!!!!");
+      console.log(this.preview);
+    } else {
+      this.preview = require("../../assets/img/user.png");
+    }
     console.log(this.preview);
   },
   methods: {

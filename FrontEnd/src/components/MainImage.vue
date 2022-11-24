@@ -165,14 +165,14 @@ export default {
           .get("/attraction/defaultrecommend/" + lat + "/" + lon)
           .then(({ data }) => {
             data.forEach((place) => {
-              console.log("??");
-              console.log(place.title);
+              // console.log("??");
+              // console.log(place.title);
 
               // if (key >= 4) {
               //   return false;
               // }
               this.buttonBox.push(place.title);
-              console.log(this.buttonBox);
+              // console.log(this.buttonBox);
               var contentImg;
               if (place.firstImage == "") {
                 contentImg =

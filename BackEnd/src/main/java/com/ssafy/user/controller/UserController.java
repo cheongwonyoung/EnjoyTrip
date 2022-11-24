@@ -309,48 +309,46 @@ public class UserController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 
-//	@GetMapping("mvinfoprofile")
-//	public ModelAndView profile() {
-//		ModelAndView mav = new ModelAndView();
-//		
-//		mav.setViewName("user/info-profile");
-//		return mav;
-//	}
-//	
-//	@GetMapping("mveditprofile")
-//	public ModelAndView editprofile() {
-//		ModelAndView mav = new ModelAndView();
-//		mav.setViewName("user/edit-profile");
-//		return mav;
-//	}
-
 	@PutMapping("/edit")
 	public ResponseEntity<?> edit(@Value("${file.path.upload-files}") String filePath,
-			@RequestPart(value = "userDto") UserDto user, @RequestPart(value = "profileImg", required = false) MultipartFile file)
-			throws Exception {
-		logger.debug("에반데? : " + user.getProfileImg());
-		if (user.getProfileImg() != null && file != null) {
-			String baseFile = filePath + user.getSaveFolder() + File.separator + user.getProfileImg();
-			logger.debug(baseFile);
-			File deleteFile = new File(baseFile);
-			deleteFile.delete();
-		}
+			@RequestPart(value = "userDto") UserDto user,
+			@RequestPart(value = "profileImg", required = false) MultipartFile file) throws Exception {
+		logger.debug("에반데? : " + file);
 		logger.debug("edit userid : {}", user);
 
 		try {
 
-			if (file != null) { // 프로필 사진 변경
-				String realPath = servletContext.getRealPath("/upload");
-//          String realPath = servletContext.getRealPath("/resources/img");
-//			String today = new SimpleDateFormat("yyMMdd").format(new Date());
-				String saveFolder = filePath + user.getUserName();
-				logger.debug("저장 폴더 : {}", saveFolder);
-				File folder = new File(saveFolder);
-				if (!folder.exists())
+			if (file != null) {
+				// 파일이 변경되었다면 기존꺼가 있을 시 삭제
+				if (!user.getProfileImg().equals("")) {
+					String baseFile = filePath + user.getSaveFolder();
+					logger.debug("!!!!!!!!!!!!!!!! 지울 경로 : " + baseFile);
+					File deleteFile = new File(baseFile);
+					
+					if(deleteFile.exists()) {
+						File[] folder_list = deleteFile.listFiles();
+						for (int j = 0; j < folder_list.length; j++) {
+							folder_list[j].delete(); // 폴더 내부의 파일 삭제 			
+						}
+						
+						logger.debug("있으면 삭제해야행~~");
+						deleteFile.delete();
+					}
+				}
+
+				// 프로필 사진이 변경되지 않더라도 폴더 이름은 변경될 수 있음
+				// 새로운 목적 폴더 경로 설정
+				String newFolder = filePath + user.getUserName();
+				logger.debug("!!!!!!!!!!!!!!!! 새로 만드는 경로 : " + newFolder);
+
+				File folder = new File(newFolder);
+				if (!folder.exists()) {
 					folder.mkdirs();
+					logger.debug("새로 만드나요? ");
+				}
 
 				String originalFileName = file.getOriginalFilename();
-				logger.debug("저장하는 이름 : " + saveFolder + " / " + originalFileName);
+				logger.debug("저장하는 이름 : " + newFolder + " / " + originalFileName);
 				if (!originalFileName.isEmpty()) {
 //				user.setSaveFolder(today + File.separator + user.getUserId());
 					user.setSaveFolder(user.getUserName());
@@ -360,7 +358,12 @@ public class UserController {
 				}
 			}
 
+			// 파일 업로드 되지 않았으므로 기존꺼 유지
+
+//			logger.debug("유저 정보좀 제발 보여줘 " + user.toString());
 			userService.editProfile(user);
+
+//			logger.debug("유저 정보좀 제발 보여줘22222222222222 " + user.toString());
 			return new ResponseEntity<Void>(HttpStatus.OK);
 		} catch (Exception e) {
 			return exceptionHandling(e);

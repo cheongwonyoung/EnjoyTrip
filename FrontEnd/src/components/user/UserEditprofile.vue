@@ -80,6 +80,7 @@
               id="input-name"
               v-model="userDto.userName"
               type="text"
+              disabled="disabled"
               required
             ></b-form-input>
           </b-input-group>
@@ -146,7 +147,7 @@
 
 <script>
 import http from "@/api/http.js";
-import { mapState, mapActions } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 
 const memberStore = "memberStore";
 
@@ -171,6 +172,7 @@ export default {
   },
   computed: {
     ...mapState(memberStore, ["isLogin", "userInfo"]),
+    ...mapGetters(["checkUserInfo"]),
   },
   created() {
     http.get("/user/editprofile/" + this.userInfo.userId).then((data) => {
@@ -191,7 +193,7 @@ export default {
           "/" +
           this.userDto.profileImg;
       } else {
-        this.preview = require("../../assets/img/signup.png");
+        this.preview = require("../../assets/img/user.png");
       }
     });
   },
@@ -213,7 +215,7 @@ export default {
         btn_toggle_text.innerText = "비밀번호 보이기";
       }
     },
-    editProfile() {
+    async editProfile() {
       if (this.userDto.userPwd == "") {
         alert("현재 패스워드를 반드시 입력하세요.");
         return;
@@ -228,9 +230,10 @@ export default {
           this.userDto.userPwd = this.changePwd;
         }
       }
+      this.userDto.saveFolder = this.userDto.userName;
 
       const formData = new FormData();
-      if (this.$refs["preview"].files);
+
       console.log("지금 이미지 정보좀 ");
       if (this.$refs["preview"].files[0]) {
         console.log(this.$refs["preview"].files[0]);
@@ -241,7 +244,7 @@ export default {
         new Blob([JSON.stringify(this.userDto)], { type: "application/json" })
       );
 
-      http
+      await http
         .put("/user/edit", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -249,12 +252,13 @@ export default {
         })
         .then(({ data }) => {
           console.log(data);
+
+          console.log("지금 찍는거다");
+          console.log(this.userDto);
+          this.editUserInfo(this.userDto);
+
           this.$router.push({ name: "infoprofile" });
         });
-
-      console.log("지금 찍는거다");
-      console.log(this.userDto);
-      this.editUserInfo(this.userDto);
     },
     // setProfileImg(file) {
     //   const fileData = (data) => {
@@ -278,7 +282,6 @@ export default {
 
       const url = URL.createObjectURL(image);
       this.preview = url;
-      this.userDto.saveFolder = this.userDto.userName;
       this.userDto.profileImg = image.name;
 
       // const url = URL.createObjectURL(image);

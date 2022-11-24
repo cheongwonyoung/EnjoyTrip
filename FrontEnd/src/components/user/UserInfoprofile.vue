@@ -146,7 +146,7 @@
 
 <script>
 import http from "@/api/http.js";
-import { mapState, mapActions } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 
 const memberStore = "memberStore";
 
@@ -169,6 +169,7 @@ export default {
   },
   computed: {
     ...mapState(memberStore, ["isLogin", "userInfo"]),
+    ...mapGetters(["checkUserInfo"]),
   },
   created() {
     http.get("/user/infoprofile/" + this.userInfo.userId).then((data) => {
@@ -183,7 +184,7 @@ export default {
           "/" +
           this.userDto.profileImg;
       } else {
-        this.preview = require("../../assets/img/signup.png");
+        this.preview = require("../../assets/img/user.png");
       }
     });
   },

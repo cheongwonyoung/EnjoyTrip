@@ -65,12 +65,14 @@ export default {
         removable: iwRemoveable,
       });
       this.inwin = infowindow;
+
       console.log("??dfsa");
       // 인포윈도우를 마커위에 표시합니다
       infowindow.open(this.map, marker);
 
       // 지도 중심좌표를 접속위치로 변경합니다
       this.map.setCenter(locPosition);
+      this.inwin.close();
     },
     setBounds(bounds) {
       // LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
@@ -131,6 +133,7 @@ export default {
       deep: true, // 배열 내부까지 본다
 
       handler(recoList) {
+        console.log("여기 오나요 ??");
         this.inwin.close();
         console.log("???1!!");
         console.log(this.map);

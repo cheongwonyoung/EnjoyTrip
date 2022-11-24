@@ -112,6 +112,7 @@
             <b-img
               v-bind:src="select.image"
               class="img-under"
+              style="height: 200px; width: 100%"
               fluid
               alt="Responsive image"
             ></b-img>
@@ -158,7 +159,6 @@ export default {
           "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg",
       },
       word: "",
-
       show: true,
     };
   },
@@ -170,12 +170,21 @@ export default {
   },
   methods: {
     addPlanList(reco) {
-      this.selected.push({
-        index: reco.contentId,
-        title: reco.title,
-        image: reco.firstImage,
-        text: "",
-      });
+      const arr = this.selected;
+      let isDuple = false;
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i].title == reco.title) isDuple = true;
+      }
+      if (!isDuple) {
+        arr.push({
+          index: reco.contentId,
+          title: reco.title,
+          image: reco.firstImage,
+          text: "",
+        });
+      } else {
+        alert("이미 추가된 관광지");
+      }
     },
     async recommend() {
       await http

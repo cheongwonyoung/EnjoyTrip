@@ -25,8 +25,8 @@
 		values (#{userId}, #{userPwd}, #{userName}, now())
 	</insert>
 	
- 	<select id="login" parameterType="map" resultMap="user">
-		select user_email, user_name, user_password
+ 	<select id="login" parameterType="map" resultMap="profileUser">
+		select *
 		from members
 		where user_email = #{userid} and
 		user_password = #{userpwd}
@@ -86,8 +86,8 @@
 		where user_email = #{userid}
 	</update>
 	
-	<select id="userInfo" parameterType="string" resultMap="memberAll">
-		select user_email, user_name, user_password, join_date
+	<select id="userInfo" parameterType="string" resultMap="profileUser">
+		select *
 		from members
 		where user_email = #{userid}
 	</select>
