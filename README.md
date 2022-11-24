@@ -3,7 +3,7 @@
 - Enjoy Trip은 사용자들에게 다양한 관광지 및 주변시설을 소개해주는 웹 사이트입니다.
 - 사용자 위치 정보 기반 관광지 소개, 지역별 관광지 소개, 지역별 주변시설 조회 기능, 여행 계획 공유 게시판 기능을 가지고 있습니다.
 - ER Diagram
-  ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2c9ead7c-6f8f-45eb-9612-436b78bf8a45/Untitled.png)
+  ![Untitled](https://user-images.githubusercontent.com/86768006/203838828-d7502014-86f9-4f96-8536-5760164f95ad.png)
 - Class Diagram
 
 ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/629e4726-7a3c-4988-b16f-54a6e6c394d8/Untitled.png)
