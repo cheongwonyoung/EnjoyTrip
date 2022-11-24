@@ -1,7 +1,11 @@
 <template>
-  <div>
+  <div class="container">
     <near-select v-on:reco="reco"></near-select>
-    <kakao-map :recoList="recoList"></kakao-map>
+    <kakao-map
+      :recoList="recoList"
+      style="margin: auto; width: 100%"
+      class="mb-5"
+    ></kakao-map>
   </div>
 </template>
 

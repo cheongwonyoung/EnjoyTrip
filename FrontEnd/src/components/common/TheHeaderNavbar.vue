@@ -4,11 +4,13 @@
       <b-row style="margin: auto; width: 80%">
         <b-col cols="2">
           <b-navbar-brand
-            ><a href="/"
+            ><a id="font_a" href="/"
               ><img
-                :src="require('../../assets/img/logo_color.png')"
-                id="img-logo" /></a
-          ></b-navbar-brand>
+                :src="require('../../assets/img/logo_color_symbol_1.png')"
+                id="img-logo"
+              />ENJOY TRIP</a
+            ></b-navbar-brand
+          >
           <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         </b-col>
 
@@ -18,10 +20,11 @@
             <b-navbar-nav class="float-right" v-if="userInfo">
               <a class="align-self-center" id="login-user">
                 <b-avatar
-                  icon="people-fill"
+                  variant="light"
+                  :src="preview"
                   style="margin-right: 5px"
-                ></b-avatar>
-                {{ userInfo.userName }}님 환영합니다.
+                ></b-avatar
+                >{{ userInfo.userName }}님 환영합니다!
               </a>
               <a
                 href="#"
@@ -115,9 +118,32 @@ const memberStore = "memberStore";
 
 export default {
   name: "TheHeaderNavbar",
+  data() {
+    return {
+      preview: "",
+    };
+  },
   computed: {
     ...mapState(memberStore, ["isLogin", "userInfo"]),
     ...mapGetters(["checkUserInfo"]),
+  },
+  created() {
+    this.preview =
+      "http://localhost:80/upload/file/" +
+      this.userInfo.saveFolder +
+      "/" +
+      this.userInfo.profileImg;
+
+    console.log(this.preview);
+  },
+  updated() {
+    this.preview =
+      "http://localhost:80/upload/file/" +
+      this.userInfo.saveFolder +
+      "/" +
+      this.userInfo.profileImg;
+
+    console.log(this.preview);
   },
   methods: {
     ...mapActions(memberStore, ["userLogout"]),
@@ -141,8 +167,20 @@ export default {
 </script>
 
 <style>
+#font_a {
+  font-size: 25px;
+  font-family: "bitbit";
+  src: url("//cdn.df.nexon.com/img/common/font/DNFBitBit-Regular.woff"),
+    url("//cdn.df.nexon.com/img/common/font/DNFBitBit-Regular.woff2");
+  text-decoration: none;
+  color: black;
+}
+#font_a:hover {
+  color: gray;
+}
+
 #header-container {
-  box-shadow: 3px 3px 3px lightgray;
+  box-shadow: 3px 3px 3px 3px lightgray;
   position: sticky;
   top: 0;
   z-index: 1;
@@ -150,7 +188,8 @@ export default {
 }
 
 #img-logo {
-  width: 70px;
+  width: 35px;
+  margin-right: 5px;
 }
 
 .img-navbar {

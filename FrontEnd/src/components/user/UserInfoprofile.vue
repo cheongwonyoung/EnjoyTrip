@@ -7,24 +7,13 @@
         <b-form id="register-form">
           <b-row>
             <b-col></b-col>
-            <b-col cols="6">
-              <b-input-group-prepend>
-                <span
-                  ><img
-                    :src="require('../../assets/img/info.png')"
-                    id="img-navbar"
-                /></span>
-                <b-input-group-prepend
-                  style="margin-left: 10px; font-size: 20px; line-height: 80px"
-                >
-                  My Information
-                </b-input-group-prepend></b-input-group-prepend
-              >
+            <b-col cols="6" style="text-align: center" class="profile-user-img">
+              <img :src="preview" class="profile-user-img" />
             </b-col>
             <b-col></b-col>
           </b-row>
 
-          <b-input-group class="mt-5">
+          <b-input-group class="mt-4">
             <b-input-group-prepend>
               <span class="input-group-text"
                 ><font-awesome-icon icon="fa-solid fa-envelope"
@@ -170,7 +159,10 @@ export default {
         userId: "",
         userPwd: "",
         joinDate: "",
+        profileImg: "",
+        saveFolder: "",
       },
+      preview: "",
       checkPwd: "",
       show: false,
     };
@@ -182,6 +174,17 @@ export default {
     http.get("/user/infoprofile/" + this.userInfo.userId).then((data) => {
       this.userDto = data.data.userInfo;
       console.log(this.userDto);
+
+      // 초기 설정
+      if (this.userDto.profileImg) {
+        this.preview =
+          "http://localhost:80/upload/file/" +
+          this.userDto.saveFolder +
+          "/" +
+          this.userDto.profileImg;
+      } else {
+        this.preview = require("../../assets/img/signup.png");
+      }
     });
   },
   methods: {
@@ -216,7 +219,7 @@ export default {
 };
 </script>
 
-<style>
+<style scope>
 #img-navbar {
   width: 100%;
   height: 80px;
@@ -248,5 +251,12 @@ export default {
   font-weight: bold;
   color: white;
   background-color: #1e4356;
+}
+
+.profile-user-img {
+  width: 90px;
+  height: 90px;
+  border-radius: 100%;
+  overflow: hidden;
 }
 </style>

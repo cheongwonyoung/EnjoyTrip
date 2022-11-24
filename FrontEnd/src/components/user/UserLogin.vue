@@ -36,7 +36,7 @@
           </b-form-group>
 
           <b-button
-            class="float-right text-danger mt-2"
+            class="float-right text-danger mt-1"
             id="btn-findpwd"
             @click="show = true"
             >비밀번호 찾기</b-button
@@ -246,7 +246,7 @@ export default {
 #btn-findpwd {
   margin-bottom: 5px;
   background-color: white;
-  font-size: 12px;
+  font-size: 13px;
 }
 #btn-findpwd:hover {
   background-color: lightgray;

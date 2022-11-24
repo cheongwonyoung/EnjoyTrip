@@ -1,8 +1,13 @@
 package com.ssafy.user.controller;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,9 +16,11 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,10 +30,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.user.model.UserDto;
 import com.ssafy.user.model.service.JwtServiceImpl;
@@ -36,12 +45,13 @@ import com.ssafy.user.model.service.UserService;
 @RestController
 @RequestMapping("/user")
 @CrossOrigin("*")
-public class UserController{
+public class UserController {
 	private UserService userService;
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
 
 	private final Logger logger = LoggerFactory.getLogger(UserController.class);
+
 	@Autowired
 	public UserController(UserService userService) {
 		logger.info("UserController 생성 완료");
@@ -50,16 +60,19 @@ public class UserController{
 
 	@Autowired
 	private JwtServiceImpl jwtService;
-       
+
+	@Autowired
+	private ServletContext servletContext;
+
 	@GetMapping("/regist")
 	public ModelAndView join() {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("user/register");
 		return mav;
-	}	
-	
+	}
+
 	@PostMapping("/regist")
-	public ResponseEntity<?> join(@RequestBody UserDto userDto) throws Exception{ 
+	public ResponseEntity<?> join(@RequestBody UserDto userDto) throws Exception {
 		logger.debug("Vue : 여기 왔는지 확인");
 		try {
 			userService.regist(userDto);
@@ -68,19 +81,19 @@ public class UserController{
 			return exceptionHandling(e);
 		}
 	}
-	
+
 	@GetMapping("/login")
 	public ModelAndView login() {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("user/login");
 		return mav;
 	}
-	
+
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody Map<String, String> map, HttpServletResponse response) {
 		logger.debug("Vue : 여기 왔는지 확인");
 		logger.debug("userid : {}", map.get("userId"));
-		
+
 		Map<String, Object> resultMap = new HashMap<>();
 		Map<String, String> user = new HashMap<>();
 		user.put("userid", map.get("userId"));
@@ -98,7 +111,7 @@ public class UserController{
 //					cookie.setMaxAge(0);
 //				}
 //				response.addCookie(cookie);
-				
+
 				String accessToken = jwtService.createAccessToken("userid", loginUser.getUserId());// key, data
 				String refreshToken = jwtService.createRefreshToken("userid", loginUser.getUserId());// key, data
 				userService.saveRefreshToken(map.get("userId"), refreshToken);
@@ -150,10 +163,9 @@ public class UserController{
 //			return mav;
 //		}
 	}
-	
+
 	@GetMapping("/info/{userid}")
-	public ResponseEntity<Map<String, Object>> getInfo(
-			@PathVariable("userid") String userid,
+	public ResponseEntity<Map<String, Object>> getInfo(@PathVariable("userid") String userid,
 			HttpServletRequest request) {
 //		logger.debug("userid : {} ", userid);
 		Map<String, Object> resultMap = new HashMap<>();
@@ -180,10 +192,9 @@ public class UserController{
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
+
 	@PostMapping("/refresh")
-	public ResponseEntity<?> refreshToken(@RequestBody UserDto userDto, HttpServletRequest request)
-			throws Exception {
+	public ResponseEntity<?> refreshToken(@RequestBody UserDto userDto, HttpServletRequest request) throws Exception {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		String token = request.getHeader("refresh-token");
@@ -203,11 +214,11 @@ public class UserController{
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
+
 	@GetMapping("/list/{userid}")
-	public ResponseEntity<?> userList(@PathVariable("userid") String userId ,HttpSession session) {
+	public ResponseEntity<?> userList(@PathVariable("userid") String userId, HttpSession session) {
 		logger.debug("SDfasdfasdf= " + userId);
-		
+
 		logger.debug("session id = " + session.getAttribute("userInfo"));
 		try {
 			UserDto userDto = userService.getMember(userId);
@@ -222,7 +233,7 @@ public class UserController{
 		}
 
 	}
-	
+
 	@GetMapping("/logout/{userid}")
 	public ResponseEntity<?> removeToken(@PathVariable("userid") String userid) {
 		Map<String, Object> resultMap = new HashMap<>();
@@ -238,21 +249,21 @@ public class UserController{
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
+
 	@GetMapping("/{userid}")
 	@ResponseBody
 	public String idCheck(@PathVariable("userid") String userId) throws Exception {
 		logger.debug("idCheck userid : {}", userId);
 		int cnt = userService.idCheck(userId);
 		logger.debug(" 제에발 : {}", cnt);
-		
+
 		return cnt + "";
 	}
-	
+
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> delete(@PathVariable("id") String userId, HttpSession session) throws Exception{ 
+	public ResponseEntity<?> delete(@PathVariable("id") String userId, HttpSession session) throws Exception {
 		logger.debug("userDelete userid : {}", userId);
-		
+
 		try {
 			userService.delete(userId);
 			session.invalidate();
@@ -261,13 +272,14 @@ public class UserController{
 			return exceptionHandling(e);
 		}
 	}
-	
+
 	@GetMapping("/infoprofile/{userid}")
 	public ResponseEntity<?> mvinfoprofile(@PathVariable("userid") String userid) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		try {
 			UserDto userDto = userService.getMember(userid);
+			logger.debug("유저 정보 받아왔음 : " + userDto);
 			resultMap.put("userInfo", userDto);
 			resultMap.put("message", SUCCESS);
 			status = HttpStatus.ACCEPTED;
@@ -278,7 +290,7 @@ public class UserController{
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
+
 	@GetMapping("/editprofile/{userid}")
 	public ResponseEntity<?> mveditprofile(@PathVariable("userid") String userid) {
 		logger.debug("정보 수정으로 옴? ");
@@ -296,7 +308,7 @@ public class UserController{
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
+
 //	@GetMapping("mvinfoprofile")
 //	public ModelAndView profile() {
 //		ModelAndView mav = new ModelAndView();
@@ -311,12 +323,43 @@ public class UserController{
 //		mav.setViewName("user/edit-profile");
 //		return mav;
 //	}
-	
+
 	@PutMapping("/edit")
-	public ResponseEntity<?> edit(@RequestBody UserDto user) throws Exception {
+	public ResponseEntity<?> edit(@Value("${file.path.upload-files}") String filePath,
+			@RequestPart(value = "userDto") UserDto user, @RequestPart(value = "profileImg", required = false) MultipartFile file)
+			throws Exception {
+		logger.debug("에반데? : " + user.getProfileImg());
+		if (user.getProfileImg() != null && file != null) {
+			String baseFile = filePath + user.getSaveFolder() + File.separator + user.getProfileImg();
+			logger.debug(baseFile);
+			File deleteFile = new File(baseFile);
+			deleteFile.delete();
+		}
 		logger.debug("edit userid : {}", user);
-		
+
 		try {
+
+			if (file != null) { // 프로필 사진 변경
+				String realPath = servletContext.getRealPath("/upload");
+//          String realPath = servletContext.getRealPath("/resources/img");
+//			String today = new SimpleDateFormat("yyMMdd").format(new Date());
+				String saveFolder = filePath + user.getUserName();
+				logger.debug("저장 폴더 : {}", saveFolder);
+				File folder = new File(saveFolder);
+				if (!folder.exists())
+					folder.mkdirs();
+
+				String originalFileName = file.getOriginalFilename();
+				logger.debug("저장하는 이름 : " + saveFolder + " / " + originalFileName);
+				if (!originalFileName.isEmpty()) {
+//				user.setSaveFolder(today + File.separator + user.getUserId());
+					user.setSaveFolder(user.getUserName());
+					user.setProfileImg(originalFileName);
+
+					file.transferTo(new File(folder, originalFileName));
+				}
+			}
+
 			userService.editProfile(user);
 			return new ResponseEntity<Void>(HttpStatus.OK);
 		} catch (Exception e) {
@@ -328,7 +371,7 @@ public class UserController{
 	public ResponseEntity<?> find(@RequestBody Map<String, String> map) throws Exception {
 		logger.debug("find userid : {}", map.get("userId"));
 		logger.debug("find username : {}", map.get("userName"));
-		
+
 		try {
 			String text = "비밀번호 = " + userService.find(map);
 			return new ResponseEntity<String>(text, HttpStatus.OK);

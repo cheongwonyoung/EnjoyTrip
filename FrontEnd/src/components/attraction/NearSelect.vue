@@ -97,7 +97,7 @@ export default {
 
 <style>
 #select-box {
-  width: 80%;
+  width: 100%;
   margin: auto;
 }
 </style>

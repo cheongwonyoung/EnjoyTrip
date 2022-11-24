@@ -60,6 +60,11 @@ const memberStore = {
         }
       );
     },
+    async editUserInfo({ commit }, userInfo) {
+      console.log("edit_user");
+      console.log(userInfo);
+      commit("SET_USER_INFO", userInfo);
+    },
     async getUserInfo({ commit, dispatch }, token) {
       let decodeToken = jwtDecode(token);
       console.log("2. getUserInfo() decodeToken :: ", decodeToken);

@@ -2,17 +2,16 @@
   <div class="mt-5 mb-5">
     <b-container class="bv-example-row mt-3">
       <b-row>
-        <b-col>
-          <b-alert show><h3>일정 공유 목록</h3></b-alert>
-        </b-col>
-      </b-row>
-      <b-row class="mb-3">
-        <b-col class="text-right">
-          <b-button
-            variant="outline-primary"
-            @click="moveWrite()"
-            v-if="userInfo"
-            >일정 공유하기</b-button
+        <b-col style="position: relative; padding: 0px">
+          <b-alert show
+            ><h2 style="padding-top: 5px">일정 공유 목록</h2>
+            <b-button
+              variant="outline-dark"
+              @click="moveWrite()"
+              v-if="userInfo"
+              style="position: absolute; right: 10px; top: 20px"
+              >일정 공유하기</b-button
+            ></b-alert
           >
         </b-col>
       </b-row>
@@ -25,6 +24,8 @@
             v-bind:img-src="article.thumbNail"
             v-bind:title="article.title"
             img-alt="Image"
+            img-width="350"
+            img-height="250"
             img-top
           >
             <!-- <b-card-text> {{ article.hit }} </b-card-text> -->
@@ -74,4 +75,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scope>
+.card-body {
+  height: 70px;
+}
+</style>

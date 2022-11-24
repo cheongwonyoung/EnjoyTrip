@@ -290,8 +290,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 #map {
-  margin: auto;
-  margin-bottom: 50px;
   width: 80%;
   height: 400px;
 }

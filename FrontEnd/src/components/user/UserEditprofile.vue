@@ -1,215 +1,369 @@
 <template>
-  <div id="header-container">
-    <b-navbar toggleable="lg" type="dark">
-      <b-row style="margin: auto; width: 80%">
-        <b-col cols="2">
-          <b-navbar-brand
-            ><a href="/"
-              ><img
-                :src="require('../../assets/img/logo_color.png')"
-                id="img-logo" /></a
-          ></b-navbar-brand>
-          <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-        </b-col>
+  <div class="mb-5">
+    <b-row class="mt-5">
+      <b-col></b-col>
 
-        <b-col cols="10">
-          <b-collapse id="nav-collapse" is-nav class="float-right">
-            <!-- After login -->
-            <b-navbar-nav class="float-right" v-if="userInfo">
-              <a class="align-self-center" id="login-user">
-                <b-avatar
-                  icon="people-fill"
-                  style="margin-right: 5px"
-                ></b-avatar>
-                {{ userInfo.userName }}님 환영합니다.
-              </a>
-              <a
-                href="#"
-                class="align-self-center link"
-                @click.prevent="onClickLogout"
-                ><img
-                  :src="require('../../assets/img/logout.png')"
-                  class="img-navbar"
-                />로그아웃</a
-              >
-              <router-link
-                :to="{ name: 'infoprofile' }"
-                class="link align-self-center"
-                ><img
-                  :src="require('../../assets/img/info.png')"
-                  class="img-navbar"
-                />마이페이지</router-link
-              >
-              <b-nav-item class="align-self-center">
-                <router-link :to="{ name: 'boardlist' }"
-                  ><img
-                    :src="require('../../assets/img/plan.png')"
-                    class="img-navbar"
-                  />일정 공유</router-link
-                >
+      <b-col cols="4">
+        <b-form id="register-form">
+          <b-row>
+            <b-col></b-col>
+            <b-col
+              cols="6"
+              style="text-align: center"
+              class="profile-user-img-edit"
+            >
+              <img :src="preview" class="profile-user-img-edit" />
+            </b-col>
+            <b-col></b-col>
+          </b-row>
+          <b-row class="mt-1">
+            <b-col></b-col>
+            <b-col cols="6" style="text-align: center">
+              <div class="filebox">
+                <label for="chooseFile">
+                  <div class="btn-upload mt-2">프로필 설정</div>
+                </label>
+                <input
+                  ref="preview"
+                  @change="uploadImg()"
+                  type="file"
+                  id="chooseFile"
+                  name="chooseFile"
+                  accept="image/*"
+                />
+              </div>
 
-                <router-link :to="{ name: 'attractiontop30' }"
+              <!-- <b-input-group-prepend>
+                <span
                   ><img
-                    :src="require('../../assets/img/camping.png')"
-                    class="img-navbar"
-                  />여행지추천</router-link
+                    :src="require('../../assets/img/info.png')"
+                    id="img-navbar"
+                /></span>
+                <b-input-group-prepend
+                  style="margin-left: 10px; font-size: 20px; line-height: 80px"
                 >
-                <router-link :to="{ name: 'attraction' }"
-                  ><img
-                    :src="require('../../assets/img/accomodation.png')"
-                    class="img-navbar"
-                  />주변시설</router-link
-                >
-                <i class="bi bi-list mobile-nav-toggle"></i>
-              </b-nav-item>
-            </b-navbar-nav>
+                  Edit Information
+                </b-input-group-prepend></b-input-group-prepend
+              > -->
+            </b-col>
+            <b-col></b-col>
+          </b-row>
 
-            <!-- Before login -->
-            <b-navbar-nav v-else>
-              <b-nav-item class="align-self-center">
-                <router-link :to="{ name: 'login' }"
-                  ><img
-                    :src="require('../../assets/img/login.png')"
-                    class="img-navbar"
-                  />로그인</router-link
-                >
-                <router-link :to="{ name: 'regist' }"
-                  ><img
-                    :src="require('../../assets/img/signup.png')"
-                    class="img-navbar"
-                  />회원가입</router-link
-                >
-                <router-link :to="{ name: 'boardlist' }"
-                  ><img
-                    :src="require('../../assets/img/plan.png')"
-                    class="img-navbar"
-                  />일정 공유</router-link
-                >
+          <b-input-group class="mt-4">
+            <b-input-group-prepend>
+              <span class="input-group-text"
+                ><font-awesome-icon icon="fa-solid fa-envelope"
+              /></span>
+            </b-input-group-prepend>
+            <b-input-group-prepend class="input-group-text" style="width: auto"
+              >ID(email)</b-input-group-prepend
+            >
+            <b-form-input
+              id="input-id"
+              v-model="userDto.userId"
+              type="email"
+              disabled="disabled"
+              required
+            ></b-form-input>
+          </b-input-group>
 
-                <router-link :to="{ name: 'attractiontop30' }"
-                  ><img
-                    :src="require('../../assets/img/camping.png')"
-                    class="img-navbar"
-                  />여행지 추천</router-link
-                >
-                <router-link :to="{ name: 'attraction' }"
-                  ><img
-                    :src="require('../../assets/img/accomodation.png')"
-                    class="img-navbar"
-                  />여행지 주변시설</router-link
-                >
-                <i class="bi bi-list mobile-nav-toggle"></i>
-              </b-nav-item>
-            </b-navbar-nav>
-          </b-collapse>
-        </b-col>
-      </b-row>
-    </b-navbar>
+          <b-input-group class="mt-5">
+            <b-input-group-prepend>
+              <span class="input-group-text"
+                ><font-awesome-icon icon="fa-solid fa-person"
+              /></span>
+            </b-input-group-prepend>
+            <b-input-group-prepend class="input-group-text" style="width: auto"
+              >UserName</b-input-group-prepend
+            >
+            <b-form-input
+              id="input-name"
+              v-model="userDto.userName"
+              type="text"
+              required
+            ></b-form-input>
+          </b-input-group>
+
+          <b-input-group class="mt-5">
+            <b-input-group-prepend>
+              <span class="input-group-text"
+                ><font-awesome-icon icon="fa-solid fa-key"
+              /></span>
+            </b-input-group-prepend>
+            <b-input-group-prepend class="input-group-text" style="width: auto"
+              >Password</b-input-group-prepend
+            >
+            <b-form-input
+              id="input-pwd-edit-before"
+              v-model="userDto.userPwd"
+              type="password"
+              placeholder="Enter current Password"
+              required
+            ></b-form-input>
+          </b-input-group>
+
+          <b-input-group class="mt-5">
+            <b-input-group-prepend>
+              <span class="input-group-text"
+                ><font-awesome-icon icon="fa-solid fa-arrows-rotate"
+              /></span>
+            </b-input-group-prepend>
+            <b-input-group-prepend class="input-group-text" style="width: auto"
+              >Password</b-input-group-prepend
+            >
+            <b-form-input
+              id="input-pwd-edit-after"
+              v-model="changePwd"
+              type="password"
+              placeholder="Enter Password to change"
+              required
+            ></b-form-input>
+          </b-input-group>
+
+          <div class="mt-5" id="btn-box">
+            <b-button
+              id="btn-toggle"
+              :pressed.sync="myToggle"
+              variant="primary"
+              @click.prevent="togglePassword"
+              >비밀번호 보이기</b-button
+            >
+            <b-button
+              type="button"
+              id="btn-editprofile"
+              class="btn"
+              @click="editProfile"
+              >정보 변경 완료</b-button
+            >
+          </div>
+        </b-form>
+      </b-col>
+
+      <b-col></b-col>
+    </b-row>
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from "vuex";
+import http from "@/api/http.js";
+import { mapState, mapActions } from "vuex";
 
 const memberStore = "memberStore";
 
 export default {
-  name: "TheHeaderNavbar",
+  name: "UserEditprofile",
+  data() {
+    return {
+      userDto: {
+        userName: "",
+        userId: "",
+        userPwd: "",
+        profileImg: "",
+        saveFolder: "",
+      },
+      currentPwd: "",
+      changePwd: "",
+      myToggle: false,
+      preview: "",
+      file: "",
+      image: "",
+    };
+  },
   computed: {
     ...mapState(memberStore, ["isLogin", "userInfo"]),
-    ...mapGetters(["checkUserInfo"]),
+  },
+  created() {
+    http.get("/user/editprofile/" + this.userInfo.userId).then((data) => {
+      console.log(data);
+      console.log(this);
+      this.userDto.userName = data.data.userInfo.userName;
+      this.userDto.userId = data.data.userInfo.userId;
+      this.currentPwd = data.data.userInfo.userPwd;
+      this.userDto.profileImg = data.data.userInfo.profileImg;
+      this.userDto.saveFolder = data.data.userInfo.saveFolder;
+      console.log(this.userDto);
+
+      // 초기 설정
+      if (this.userDto.profileImg) {
+        this.preview =
+          "http://localhost:80/upload/file/" +
+          this.userDto.saveFolder +
+          "/" +
+          this.userDto.profileImg;
+      } else {
+        this.preview = require("../../assets/img/signup.png");
+      }
+    });
   },
   methods: {
-    ...mapActions(memberStore, ["userLogout"]),
-    // ...mapMutations(memberStore, ["SET_IS_LOGIN", "SET_USER_INFO"]),
-    onClickLogout() {
-      // this.SET_IS_LOGIN(false);
-      // this.SET_USER_INFO(null);
-      // sessionStorage.removeItem("access-token");
-      // if (this.$route.path != "/") this.$router.push({ name: "main" });
-      console.log(this.userInfo.userid);
-      //vuex actions에서 userLogout 실행(Backend에 저장 된 리프레시 토큰 없애기
-      //+ satate에 isLogin, userInfo 정보 변경)
-      // this.$store.dispatch("userLogout", this.userInfo.userid);
-      this.userLogout(this.userInfo.userid);
-      sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
-      sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
-      this.$router.push({ name: "login" });
+    ...mapActions(memberStore, ["editUserInfo"]),
+    togglePassword() {
+      let edit_pwd_before = document.querySelector("#input-pwd-edit-before");
+      let edit_pwd_after = document.querySelector("#input-pwd-edit-after");
+      let btn_toggle_text = document.querySelector("#btn-toggle");
+      if (this.myToggle) {
+        // 비밀번호 보기 버튼이 눌린다면
+        edit_pwd_before.setAttribute("type", "text");
+        edit_pwd_after.setAttribute("type", "text");
+        btn_toggle_text.innerText = "비밀번호 가리기";
+      } else {
+        // 비밀번호 가리기 버튼이눌린다면
+        edit_pwd_before.setAttribute("type", "password");
+        edit_pwd_after.setAttribute("type", "password");
+        btn_toggle_text.innerText = "비밀번호 보이기";
+      }
+    },
+    editProfile() {
+      if (this.userDto.userPwd == "") {
+        alert("현재 패스워드를 반드시 입력하세요.");
+        return;
+      }
+      if (this.userDto.userPwd != this.currentPwd) {
+        console.log(this.userDto.userPwd);
+        console.log(this.currentPwd);
+        alert("비밀번호가 일치하지 않습니다.");
+        return;
+      } else {
+        if (this.changePwd != "") {
+          this.userDto.userPwd = this.changePwd;
+        }
+      }
+
+      const formData = new FormData();
+      if (this.$refs["preview"].files);
+      console.log("지금 이미지 정보좀 ");
+      if (this.$refs["preview"].files[0]) {
+        console.log(this.$refs["preview"].files[0]);
+        formData.append("profileImg", this.$refs["preview"].files[0]);
+      }
+      formData.append(
+        "userDto",
+        new Blob([JSON.stringify(this.userDto)], { type: "application/json" })
+      );
+
+      http
+        .put("/user/edit", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then(({ data }) => {
+          console.log(data);
+          this.$router.push({ name: "infoprofile" });
+        });
+
+      console.log("지금 찍는거다");
+      console.log(this.userDto);
+      this.editUserInfo(this.userDto);
+    },
+    // setProfileImg(file) {
+    //   const fileData = (data) => {
+    //     this.preview = data;
+    //   };
+    //   const reader = new FileReader();
+    //   reader.readAsDataURL(file);
+    //   reader.addEventListener(
+    //     "load",
+    //     function () {
+    //       fileData(reader.result);
+    //     },
+    //     false
+    //   );
+    // },
+    uploadImg() {
+      console.log("이미지 변경되고 여기에 들어왔다");
+      var image = this.$refs["preview"].files[0];
+      console.log("이미지 이름");
+      console.log(image);
+
+      const url = URL.createObjectURL(image);
+      this.preview = url;
+      this.userDto.saveFolder = this.userDto.userName;
+      this.userDto.profileImg = image.name;
+
+      // const url = URL.createObjectURL(image);
     },
   },
 };
 </script>
 
-<style>
-#header-container {
-  box-shadow: 3px 3px 3px lightgray;
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  background-color: white;
+<style scope>
+#img-navbar {
+  width: 100%;
+  height: 80px;
+}
+#profile {
+  width: 100%;
+  height: 80px;
+}
+#register-form {
+  border: 1px solid lightgray;
+  border-radius: 7px;
+  padding: 20px;
+  text-align: left;
+}
+#btn-box {
+  text-align: center;
+}
+#btn-toggle {
+  color: #1e4356;
+  background-color: #ffffff;
+  border: 1px solid #1e4356;
+  margin-right: 20px;
+}
+#btn-toggle:hover {
+  font-weight: bold;
+}
+#btn-editprofile {
+  color: white;
+  background-color: #1e4356;
+  margin-left: 20px;
+}
+#btn-editprofile:hover {
+  font-weight: bold;
 }
 
-#img-logo {
-  width: 70px;
+/* 첨부파일 관련 css */
+.filebox .upload-name {
+  display: inline-block;
+  height: 40px;
+  padding: 0 10px;
+  vertical-align: middle;
+  border: 1px solid #dddddd;
+  width: 50%;
+  color: #999999;
 }
 
-.img-navbar {
-  width: 20px;
-  margin-right: 2px;
-}
-
-#headname {
-  margin-left: 300px;
-}
-
-.navbar {
+.filebox input[type="file"] {
+  position: absolute;
+  width: 0;
+  height: 0;
   padding: 0;
+  overflow: hidden;
+  border: 0;
 }
 
-.navbar ul {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  list-style: none;
-  align-items: center;
-}
-
-.navbar li {
-  position: relative;
-}
-
-.navbar a,
-.navbar a:focus {
+.btn-upload {
+  width: 150px;
+  height: 30px;
+  background: #fff;
+  border: 1px solid rgb(77, 77, 77);
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 10px 0 10px 30px;
-  font-family: "Open Sans", sans-serif;
-  font-size: 14px;
-  color: black;
-  white-space: nowrap;
-  transition: 0.3s;
+  justify-content: center;
+}
+.btn-upload:hover {
+  background: rgb(77, 77, 77);
+  color: #fff;
 }
 
-.navbar a i,
-.navbar a:focus i {
-  font-size: 12px;
-  line-height: 0;
-  margin-left: 5px;
-}
-
-.navbar a:hover,
-.navbar .active,
-.navbar .active:focus,
-.navbar li:hover > a {
-  color: gray;
-}
-
-#login-user {
-  color: black;
-}
-#login-user:hover {
-  text-decoration: unset;
-  color: black;
+.profile-user-img-edit {
+  width: 90px;
+  height: 90px;
+  border-radius: 100%;
+  overflow: hidden;
 }
 </style>

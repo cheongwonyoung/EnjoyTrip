@@ -60,24 +60,36 @@
             v-bind:title="portfolio.title"
             v-bind:img-src="portfolio.firstImage"
             img-alt="Image"
+            img-width="350"
+            img-height="300"
             img-top
           >
-            <!-- <b-card-text> {{ portfolio.overview }} </b-card-text> -->
-            <!-- <template #footer>
-              <small class="text-muted">Last updated 3 mins ago</small>
-            </template> -->
           </b-card>
 
-          <b-modal :id="'modal-' + idx">
-            <h1>여행지 정보</h1>
+          <b-modal :id="'modal-' + idx" hide-footer title="이 여행지는요">
             <b-card
               v-bind:img-src="portfolio.firstImage"
               v-bind:title="portfolio.title"
               img-alt="Image"
               img-top
+              img-width="400"
+              img-height="300"
+              class="mb-2"
             >
             </b-card>
-            <b-card-text> {{ portfolio.overview }} </b-card-text>
+            <b-card-text v-if="portfolio.addr1" style="margin: 5px">
+              주소 : {{ portfolio.addr1 }}
+            </b-card-text>
+            <b-card-text v-if="portfolio.addr2" style="margin: 5px">
+              상세주소 : {{ portfolio.addr2 }}
+            </b-card-text>
+            <b-card-text v-if="portfolio.tel" style="margin: 5px">
+              전화번호 : {{ portfolio.tel }}
+            </b-card-text>
+
+            <b-button class="mt-3" block @click="$bvModal.hide(`modal-${idx}`)"
+              >확인</b-button
+            >
           </b-modal>
         </div>
       </b-card-group>
@@ -263,7 +275,10 @@ export default {
 };
 </script>
 
-<style>
+<style scope>
+.card-body {
+  height: 80px;
+}
 .btn-grp {
   margin: 0px 25px;
   margin-top: 30px;
