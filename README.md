@@ -16,7 +16,7 @@
 
 ### 1) 메인 페이지
 
-![제목 없음.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e5534192-005d-4252-b5f2-4475001384bc/%EC%A0%9C%EB%AA%A9_%EC%97%86%EC%9D%8C.png)
+![sst](https://user-images.githubusercontent.com/86768006/203840590-c0d84775-8ba5-4902-83de-1e23c6c7205b.png)
 
 1. nav bar
    - 로그인, 회원가입, 일정 공유, 여행지 추천, 여행지 주변시설 페이지로 이동 가능
