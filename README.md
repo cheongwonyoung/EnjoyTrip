@@ -4,21 +4,21 @@
 - 사용자 위치 정보 기반 관광지 소개, 지역별 관광지 소개, 지역별 주변시설 조회 기능, 여행 계획 공유 게시판 기능을 가지고 있습니다.
 - ER Diagram
     
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2c9ead7c-6f8f-45eb-9612-436b78bf8a45/Untitled.png)
+    <!--![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2c9ead7c-6f8f-45eb-9612-436b78bf8a45/Untitled.png)-->
     
 - Class Diagram
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/629e4726-7a3c-4988-b16f-54a6e6c394d8/Untitled.png)
+ <!--![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/629e4726-7a3c-4988-b16f-54a6e6c394d8/Untitled.png)-->
 
 - usecase
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e1ffc7f2-ec36-48e6-9aa0-a250ad200702/Untitled.png)
+ <!--![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e1ffc7f2-ec36-48e6-9aa0-a250ad200702/Untitled.png)-->
 
 # **2. 기능**
 
 ### 1) 메인 페이지
 
-![제목 없음.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e5534192-005d-4252-b5f2-4475001384bc/%EC%A0%9C%EB%AA%A9_%EC%97%86%EC%9D%8C.png)
+ <!--![제목 없음.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e5534192-005d-4252-b5f2-4475001384bc/%EC%A0%9C%EB%AA%A9_%EC%97%86%EC%9D%8C.png)-->
 
 1. nav bar
     - 로그인, 회원가입, 일정 공유, 여행지 추천, 여행지 주변시설 페이지로 이동 가능
@@ -35,7 +35,7 @@
 
 ### 3) 로그인 페이지
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/fea4ff48-f7bf-4080-9ae0-6a3a3f13d0bd/Untitled.png)
+ <!--![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/fea4ff48-f7bf-4080-9ae0-6a3a3f13d0bd/Untitled.png)-->
 
 1. 아이디 저장
     - 이전에 로그인한 정보(아이디)를 저장
@@ -45,7 +45,7 @@
 
 ### 4) 비밀번호 찾기 모달창
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8d477707-2214-49ef-84c6-f388b36badac/Untitled.png)
+ <!--![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8d477707-2214-49ef-84c6-f388b36badac/Untitled.png)-->
 
 1. 현재 비밀번호 출력
     - 올바른 아이디와 이름이 입력되면 현재 비밀번호를 출력
@@ -53,7 +53,7 @@
 
 ### 5) 회원가입 페이지
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2ca9829b-1e2e-4edd-97db-6a56a1c3e507/Untitled.png)
+ <!--![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2ca9829b-1e2e-4edd-97db-6a56a1c3e507/Untitled.png)-->
 
 1. 회원가입 폼
     - 폼에 입력된 정보에 따라 알맞은 alert창을 띄움
@@ -61,9 +61,9 @@
 
 ### 6) 마이 페이지
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9dac0b7d-d4a4-4870-91c5-a2fec8e848ba/Untitled.png)
+ <!--![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9dac0b7d-d4a4-4870-91c5-a2fec8e848ba/Untitled.png)-->
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f3299ffa-790b-4893-9e63-85867ce5b764/Untitled.png)
+ <!--![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f3299ffa-790b-4893-9e63-85867ce5b764/Untitled.png)-->
 
 1. 회원정보 수정 페이지로 연결되는 버튼
 2. 회원탈퇴 버튼
@@ -72,7 +72,7 @@
 
 ### 7) 프로필 변경 페이지
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/88da35fa-80cf-4134-b442-af906a38c534/Untitled.png)
+ <!--![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/88da35fa-80cf-4134-b442-af906a38c534/Untitled.png)-->
 
 1. 현재 사용자의 정보 출력
     - 바꾸고 싶은 정보 입력
@@ -88,7 +88,7 @@
 
 ### 8) 여행지 추천 페이지
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a09a3bd9-99f8-42c7-abea-59603e1e2ca3/Untitled.png)
+ <!--![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a09a3bd9-99f8-42c7-abea-59603e1e2ca3/Untitled.png)-->
 
 1. 로그인시 바뀐 navbar 모습
 2. 지역 설정 select box
@@ -103,18 +103,18 @@
 
 ### 9) 관광지 상세정보
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/28acea2c-41b8-4c5e-9f0a-cd6bc08de993/Untitled.png)
+ <!--![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/28acea2c-41b8-4c5e-9f0a-cd6bc08de993/Untitled.png)-->
 
 1. 해당 관광지의 대표 이미지 출력
 2. 해당 관광지의 정보 출력 (제목, 주소, 전화번호)
 
 ### 10) 여행지 주변시설 페이지
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8239a0ec-2f64-4bfb-8af7-3e40686ba2d8/Untitled.png)
+ <!--![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8239a0ec-2f64-4bfb-8af7-3e40686ba2d8/Untitled.png)-->
 
 1. 사용자 위치를 마커로 표시
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/88d9a95a-3b37-4969-a7c5-f84541b89217/Untitled.png)
+ <!--![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/88d9a95a-3b37-4969-a7c5-f84541b89217/Untitled.png)-->
 
 1. 지역/옵션 설정 select box
     - 시도선택을 하면 구군선택 option이 변경
@@ -124,13 +124,13 @@
     - 마커들의 위치에 따라 지도 범위가 재설정
 3. 마커를 누르면 볼 수 있는 custom overlay
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/239c9cb6-a9c9-4bcd-b0e6-5894fe4057bf/Untitled.png)
+ <!--![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/239c9cb6-a9c9-4bcd-b0e6-5894fe4057bf/Untitled.png)-->
 
 - 다른 마커를 클릭하면 이전 custom overlay는 사라짐
 
 ### 11) 일정 공유 목록 페이지
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f1d64ad4-a214-4da9-93a4-2daef699efa5/Untitled.png)
+ <!--![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f1d64ad4-a214-4da9-93a4-2daef699efa5/Untitled.png)-->
 
 1. 일정 공유 작성 페이지로 이동하는 버튼
 2. 공유된 일정을 간단하게 보여줌 (썸네일, 제목, 조회수)
@@ -138,9 +138,9 @@
 
 ### 12) 일정 공유 작성 페이지
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f914987b-aa65-4a16-8782-8ba6cffeed9e/Untitled.png)
+ <!--![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f914987b-aa65-4a16-8782-8ba6cffeed9e/Untitled.png)-->
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/35c9e11b-f2cd-4cf3-a883-b0eab336edfd/Untitled.png)
+ <!--![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/35c9e11b-f2cd-4cf3-a883-b0eab336edfd/Untitled.png)-->
 
 1. 게시물 제목
 2. 관광지 검색
@@ -155,7 +155,7 @@
 
 ### 13) 일정 공유 상세 페이지
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/11061ab1-7551-404b-b3fd-40a713222f58/Untitled.png)
+ <!--![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/11061ab1-7551-404b-b3fd-40a713222f58/Untitled.png)-->
 
 1. 목록보기, 삭제하기 버튼
     - 목록보기 버튼을 클릭하면 일정 공유 목록 페이지로 이동
